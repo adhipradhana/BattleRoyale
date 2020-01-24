@@ -14,9 +14,10 @@ GameObject:
   - component: {fileID: 58269992767811388}
   - component: {fileID: 5193124900433394878}
   - component: {fileID: 114053177295065168}
-  m_Layer: 0
+  - component: {fileID: 151732582}
+  m_Layer: 8
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Agent
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -153,6 +154,18 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4562280534755094957, guid: b8acdb2e5c45044f390a84e974a82303,
     type: 3}
   bulletForce: 20
+--- !u!114 &151732582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3787827691337058605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 601d10bd1ae094d82a7c2fa805f3e34d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5486585120709544841
 GameObject:
   m_ObjectHideFlags: 0
@@ -162,7 +175,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2357420876621064934}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Fire Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -177,7 +190,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5486585120709544841}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.55, z: 0}
+  m_LocalPosition: {x: 0.009, y: 1.246, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3787827691337058607}
@@ -193,7 +206,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6525740318395304216}
   - component: {fileID: 1473947667630525536}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: View Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -208,7 +221,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5909461448813588542}
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: -0, y: 0.855, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3787827691337058607}

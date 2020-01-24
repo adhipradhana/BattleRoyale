@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour {
+public class PlayerMovement : MonoBehaviour
+{
     public float moveSpeed = 5f;
 
     public Rigidbody2D rb;
@@ -12,7 +13,8 @@ public class PlayerMovement : MonoBehaviour {
     Vector2 mousePos;
 
     // Update is called once per frame
-    void Update() {
+    void Update()
+    {
         movement.x = Input.GetAxis("Horizontal");
         movement.y = Input.GetAxis("Vertical"); 
         mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
