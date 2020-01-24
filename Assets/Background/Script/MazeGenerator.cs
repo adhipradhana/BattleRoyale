@@ -104,7 +104,7 @@ public class MazeGenerator : MonoBehaviour
 
         CreateCentre();
         RunAlgorithm();
-        MakeExit();
+        //MakeExit();
     }
 
     // This is where the fun stuff happens.
