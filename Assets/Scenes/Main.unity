@@ -155,8 +155,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04e120fa27343471aaa08b780d07763e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mazeRows: 20
-  mazeColumns: 20
+  mazeRows: 8
+  mazeColumns: 8
   cellPrefab: {fileID: 6820864435047719416, guid: 9fa6d01f526b34036991609082c31933,
     type: 3}
   disableCellSprite: 1
@@ -218,7 +218,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 7
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2

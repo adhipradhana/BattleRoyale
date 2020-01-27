@@ -8,6 +8,7 @@ TagManager:
   - Agent
   - Health Pack
   - Bullet Pack
+  - Wall
   layers:
   - Default
   - TransparentFX
