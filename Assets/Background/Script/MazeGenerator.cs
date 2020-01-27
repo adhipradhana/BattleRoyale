@@ -27,6 +27,14 @@ public class MazeGenerator : MonoBehaviour
     [Tooltip("If you want to disable the main sprite so the cell has no background, set to TRUE. This will create a maze with only walls.")]
     public bool disableCellSprite;
 
+    [Header("Item generation prefab object.")]
+    public GameObject bulletPackPrefab;
+    public GameObject healthPackPrefab;
+
+    [Header("Item generation number")]
+    public int bulletPackNumber = 5;
+    public int healthPackNumber = 5;
+
     // ------------------------------------------------------
     // System defined variables - You don't need to touch these:
     // ------------------------------------------------------
@@ -40,6 +48,8 @@ public class MazeGenerator : MonoBehaviour
     private List<Cell> unvisited = new List<Cell>();
     // List to store 'stack' cells, cells being checked during generation.
     private List<Cell> stack = new List<Cell>();
+    // List for saving dictionary key
+    private List<Vector2> itemKey = new List<Vector2>();
 
     // Array will hold 4 centre room cells, from 0 -> 3 these are:
     // Top left (0), top right (1), bottom left (2), bottom right (3).
@@ -91,6 +101,8 @@ public class MazeGenerator : MonoBehaviour
         {
             for (int y = 1; y <= mazeRows; y++)
             {
+                itemKey.Add(spawnPos);
+
                 GenerateCell(spawnPos, new Vector2(x, y));
 
                 // Increase spawnPos y.
@@ -104,7 +116,7 @@ public class MazeGenerator : MonoBehaviour
 
         CreateCentre();
         RunAlgorithm();
-        //MakeExit();
+        GenerateItem();
     }
 
     // This is where the fun stuff happens.
@@ -138,31 +150,6 @@ public class MazeGenerator : MonoBehaviour
                 stack.Remove(currentCell);
             }
         }
-    }
-
-    public void MakeExit()
-    {
-        // Create and populate list of all possible edge cells.
-        List<Cell> edgeCells = new List<Cell>();
-
-        foreach (KeyValuePair<Vector2, Cell> cell in allCells)
-        {
-            if (cell.Key.x == 0 || cell.Key.x == mazeColumns || cell.Key.y == 0 || cell.Key.y == mazeRows)
-            {
-                edgeCells.Add(cell.Value);
-            }
-        }
-
-        // Get edge cell randomly from list.
-        Cell newCell = edgeCells[Random.Range(0, edgeCells.Count)];
-
-        // Remove appropriate wall for chosen edge cell.
-        if (newCell.gridPos.x == 0) RemoveWall(newCell.cScript, 1);
-        else if (newCell.gridPos.x == mazeColumns) RemoveWall(newCell.cScript, 2);
-        else if (newCell.gridPos.y == mazeRows) RemoveWall(newCell.cScript, 3);
-        else RemoveWall(newCell.cScript, 4);
-
-        Debug.Log("Maze generation finished.");
     }
 
     public List<Cell> GetUnvisitedNeighbours(Cell curCell)
@@ -301,6 +288,46 @@ public class MazeGenerator : MonoBehaviour
         mazeParent = new GameObject();
         mazeParent.transform.position = Vector2.zero;
         mazeParent.name = "Maze";
+    }
+
+    public void GenerateItem()
+    {
+        // Clone item key
+        List<Vector2> itemKeyClone = new List<Vector2>();
+        foreach (Vector2 key in itemKey) {
+            itemKeyClone.Add(new Vector2(key.x, key.y));
+        }
+
+        // Check if item is more than cell number
+        int cellCount = itemKey.Count;
+        int itemCount = bulletPackNumber + healthPackNumber;
+
+        if (itemCount > cellCount) {
+            itemCount = cellCount;
+            bulletPackNumber = itemCount / 2;
+            healthPackNumber = itemCount / 2;
+        }
+
+        for (int i = 0; i < bulletPackNumber; i++) {
+            // Get random Vector2 value
+            int index = Random.Range(0, itemKeyClone.Count);
+            Vector2 position = itemKeyClone[index];
+            itemKeyClone.Remove(position);
+
+            GameObject bulletPack = Instantiate(bulletPackPrefab);
+            bulletPack.transform.position = position;
+        }
+
+        for (int i = 0; i < healthPackNumber; i++)
+        {
+            // Get random Vector2 value
+            int index = Random.Range(0, itemKeyClone.Count);
+            Vector2 position = itemKeyClone[index];
+            itemKeyClone.Remove(position);
+
+            GameObject healthPack = Instantiate(healthPackPrefab);
+            healthPack.transform.position = position;
+        }
     }
 
     public bool IsOdd(int value)

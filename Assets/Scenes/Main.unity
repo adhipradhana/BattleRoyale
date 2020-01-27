@@ -155,11 +155,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04e120fa27343471aaa08b780d07763e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mazeRows: 8
-  mazeColumns: 8
+  mazeRows: 20
+  mazeColumns: 20
   cellPrefab: {fileID: 6820864435047719416, guid: 9fa6d01f526b34036991609082c31933,
     type: 3}
   disableCellSprite: 1
+  bulletPackPrefab: {fileID: 9183818822506923582, guid: c1cc76da412404a778eb12ce442845cf,
+    type: 3}
+  healthPackPrefab: {fileID: 267109571679755536, guid: 08639e2518c3a4ffe9faf0b4e624dba4,
+    type: 3}
+  bulletPackNumber: 5
+  healthPackNumber: 5
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -315,8 +321,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1032085912}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -1.214, y: -5.05, z: 0}
+  m_LocalScale: {x: 10, y: 10, z: 1}
   m_Children: []
   m_Father: {fileID: 1881529656}
   m_RootOrder: 0

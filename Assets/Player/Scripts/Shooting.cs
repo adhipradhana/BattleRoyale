@@ -10,9 +10,9 @@ public class Shooting : MonoBehaviour
 
     public Transform firePoint;
     public GameObject bulletPrefab;
-    public float bulletForce = 5f;
+    public float bulletForce = 20f;
 
-    private int bulletCount = 10;
+    private int bulletCount = 10000;
     public int BulletCount
     {
         get { return bulletCount; }
