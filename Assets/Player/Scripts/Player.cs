@@ -2,20 +2,34 @@
 using System.Collections.Generic;
 using UnityEngine;
 using MLAgents;
+using MLAgents.Sensor;
 
 public class Player : Agent
 {
     private PlayerHealth playerHealth;
     private PlayerMovement playerMovement;
-    //private PlayerObservation playerObservation;
     private PlayerShooting playerShooting;
 
-    void Start()
+    void Awake()
     {
         playerHealth = GetComponent<PlayerHealth>();
         playerMovement = GetComponent<PlayerMovement>();
-        //playerObservation = GetComponent<PlayerObservation>();
         playerShooting = GetComponent<PlayerShooting>();
+    }
+
+    public override void AgentAction(float[] vectorAction)
+    {
+        Vector2 movement = new Vector2(vectorAction[0], vectorAction[1]);
+
+        playerMovement.Move(movement);
+    }
+
+    public override float[] Heuristic()
+    {
+        var action = new float[2];
+        action[0] = Input.GetAxis("Horizontal");
+        action[1] = Input.GetAxis("Vertical");
+        return action;
     }
 
     public override void CollectObservations()
@@ -29,12 +43,12 @@ public class Player : Agent
         AddVectorObs(rotation);
 
         // Add Health Vector
-        AddVectorObs((float) playerHealth.Health / (float) PlayerHealth.MaxHealth);
+        AddVectorObs((float)playerHealth.Health / (float)PlayerHealth.MaxHealth);
 
-        // Add Health Pack Number
+        //// Add Health Pack Number
         AddVectorObs(playerHealth.HealthPack);
 
-        // Add Bullet number
+        //// Add Bullet number
         AddVectorObs(playerShooting.BulletCount);
     }
 

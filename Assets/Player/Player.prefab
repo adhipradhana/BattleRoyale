@@ -80,7 +80,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: ce58031d7ff2c47f2b8a1d2968dbe760, type: 3}
-  m_Color: {r: 0.9245283, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.990566, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -140,9 +140,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    vectorObservationSize: 9
+    vectorObservationSize: 6
     numStackedVectorObservations: 1
-    vectorActionSize: 01000000
+    vectorActionSize: 03000000
     vectorActionDescriptions: []
     vectorActionSpaceType: 1
   m_Model: {fileID: 0}
@@ -223,17 +223,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sensorName: PlayerSensor
-  detectableTags: []
+  detectableTags:
+  - Wall
+  - Agent
+  - Bullet Pack
+  - Health Pack
+  - Bullet
   raysPerDirection: 3
   maxRayDegrees: 45
   sphereCastRadius: 0
-  rayLength: 20
+  rayLength: 1000
   rayLayerMask:
     serializedVersion: 2
-    m_Bits: 4294967291
+    m_Bits: 791
   observationStacks: 1
-  rayHitColor: {r: 1, g: 0, b: 0, a: 1}
-  rayMissColor: {r: 1, g: 1, b: 1, a: 1}
+  rayHitColor: {r: 1, g: 0.86160624, b: 0, a: 1}
+  rayMissColor: {r: 0, g: 0.17596579, b: 1, a: 1}
   useWorldPositions: 1
 --- !u!1 &4852271967002871972
 GameObject:
