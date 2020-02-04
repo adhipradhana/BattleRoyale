@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
-    private const int MaxHealth = 100;
+    public const int MaxHealth = 100;
     private const int MinHealth = 0;
     private const int HealthAddition = 40;
-    private const int BulletDamage = 15;
+    private const int BulletDamage = 30;
     private const int MinHealthPack = 0;
     private const string BulletTag = "Bullet";
     private const string HealthPackTag = "Health Pack";
@@ -24,6 +24,11 @@ public class PlayerHealth : MonoBehaviour
     {
         get { return healthPack; }
         set { healthPack = value; }
+    }
+
+    void Update()
+    {
+        CheckDeath();    
     }
 
     void UseHealthPack()
@@ -49,7 +54,8 @@ public class PlayerHealth : MonoBehaviour
     {
         if (health < MinHealth)
         {
-            Debug.Log("Player died");
+            gameObject.SetActive(false);
+            StageAcademy.playerCount--;
             // TODO : Give punishment if player died
         }
     }

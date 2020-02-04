@@ -5,18 +5,22 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed = 5f;
-
     public Rigidbody2D rb;
-    public Camera cam;
 
-    Vector2 movement;
-    Vector2 mousePos;
+    private Camera cam;
+    private Vector2 movement;
+    private Vector2 mousePos;
+
+    void Start()
+    {
+        cam = FindObjectOfType<Camera>();
+    }
 
     // Update is called once per frame
     void Update()
     {
         movement.x = Input.GetAxis("Horizontal");
-        movement.y = Input.GetAxis("Vertical"); 
+        movement.y = Input.GetAxis("Vertical");
         mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
 
         rb.MovePosition(rb.position + movement * moveSpeed * Time.deltaTime);
