@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerShooting : MonoBehaviour
 {
-    private const string BulletPackTag = "Bullet Pack";
     private const int BulletPackAddition = 10;
     private const int MinBulletCount = 0;
 
@@ -19,16 +18,7 @@ public class PlayerShooting : MonoBehaviour
         set { bulletCount = value; }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetButtonDown("Fire1"))
-        {
-            Shoot();
-        }
-    }
-
-    void Shoot()
+    public void Shoot()
     {
         if (BulletCount > MinBulletCount)
         {
@@ -45,12 +35,8 @@ public class PlayerShooting : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter2D(Collider2D collision)
+    public void GetBulletPack()
     {
-        if (collision.gameObject.CompareTag(BulletPackTag))
-        {
-            BulletCount += BulletPackAddition;
-            Destroy(collision.gameObject);
-        }
+        BulletCount += BulletPackAddition;
     }
 }

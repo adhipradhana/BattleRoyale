@@ -12,12 +12,12 @@ GameObject:
   - component: {fileID: 3787827691337058604}
   - component: {fileID: 1991187455918025431}
   - component: {fileID: 58269992767811388}
+  - component: {fileID: 114935659207972336}
   - component: {fileID: 6620607418544551011}
   - component: {fileID: 5193124900433394878}
   - component: {fileID: 151732582}
   - component: {fileID: 1430323750458562887}
   - component: {fileID: 1385181549545170327}
-  - component: {fileID: 114935659207972336}
   m_Layer: 8
   m_Name: Player
   m_TagString: Agent
@@ -127,6 +127,36 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.33024645
+--- !u!114 &114935659207972336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3787827691337058605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f67c7e722ba14acd9153bb4488bff6e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sensorName: Player Sensor
+  detectableTags:
+  - Wall
+  - Agent
+  - Bullet Pack
+  - Health Pack
+  - Bullet
+  raysPerDirection: 3
+  maxRayDegrees: 45
+  sphereCastRadius: 0
+  rayLength: 500
+  rayLayerMask:
+    serializedVersion: 2
+    m_Bits: 791
+  observationStacks: 1
+  rayHitColor: {r: 0.07381892, g: 1, b: 0, a: 1}
+  rayMissColor: {r: 0, g: 0.17596579, b: 1, a: 1}
+  useWorldPositions: 1
 --- !u!114 &6620607418544551011
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -147,7 +177,7 @@ MonoBehaviour:
     vectorActionSpaceType: 1
   m_Model: {fileID: 0}
   m_InferenceDevice: 0
-  m_BehaviorType: 1
+  m_BehaviorType: 0
   m_BehaviorName: PlayerBrain
   m_TeamID: 0
   m_useChildSensors: 1
@@ -207,39 +237,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agentParameters:
     maxStep: 0
-    resetOnDone: 1
+    resetOnDone: 0
     onDemandDecision: 0
     numberOfActionsBetweenDecisions: 1
---- !u!114 &114935659207972336
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3787827691337058605}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f67c7e722ba14acd9153bb4488bff6e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sensorName: PlayerSensor
-  detectableTags:
-  - Wall
-  - Agent
-  - Bullet Pack
-  - Health Pack
-  - Bullet
-  raysPerDirection: 3
-  maxRayDegrees: 45
-  sphereCastRadius: 0
-  rayLength: 1000
-  rayLayerMask:
-    serializedVersion: 2
-    m_Bits: 791
-  observationStacks: 1
-  rayHitColor: {r: 1, g: 0.86160624, b: 0, a: 1}
-  rayMissColor: {r: 0, g: 0.17596579, b: 1, a: 1}
-  useWorldPositions: 1
 --- !u!1 &4852271967002871972
 GameObject:
   m_ObjectHideFlags: 0

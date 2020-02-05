@@ -9,8 +9,6 @@ public class PlayerHealth : MonoBehaviour
     private const int HealthAddition = 40;
     private const int BulletDamage = 30;
     private const int MinHealthPack = 0;
-    private const string BulletTag = "Bullet";
-    private const string HealthPackTag = "Health Pack";
 
     private int health = 100;
     private int healthPack = 0;
@@ -26,12 +24,8 @@ public class PlayerHealth : MonoBehaviour
         set { healthPack = value; }
     }
 
-    void Update()
-    {
-        CheckDeath();    
-    }
 
-    void UseHealthPack()
+    public void UseHealthPack()
     {
         if (Input.GetKeyDown(KeyCode.H))
         { 
@@ -44,34 +38,31 @@ public class PlayerHealth : MonoBehaviour
                 }
 
                 healthPack--;
-
-                // TODO : Add reward for using health
             }
         }
     }
 
-    void CheckDeath()
+    public bool CheckDeath()
     {
         if (health < MinHealth)
         {
-            gameObject.SetActive(false);
             StageAcademy.playerCount--;
-            // TODO : Give punishment if player died
+            return true;
         }
+
+        return false;
     }
 
-    void OnTriggerEnter2D(Collider2D collision)
+    public void AgentInjured()
     {
-        if (collision.gameObject.CompareTag(BulletTag))
-        {
-            health -= BulletDamage;
-            Debug.Log("Player health " + Health);
-
-            Destroy(collision.gameObject);
-        } else if (collision.gameObject.CompareTag(HealthPackTag))
-        {
-            HealthPack++;
-            Destroy(collision.gameObject);
-        }
+        Health -= BulletDamage;
+        Debug.Log("Player health " + Health);
     }
+
+    public void GetHealthPack()
+    {
+        HealthPack++;
+    }
+
+
 }
