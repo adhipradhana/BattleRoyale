@@ -10,6 +10,7 @@ public class PlayerShooting : MonoBehaviour
     public Transform firePoint;
     public GameObject bulletPrefab;
     public float bulletForce = 20f;
+    public Player sourcePlayer;
 
     private int bulletCount = 0;
     public int BulletCount
@@ -32,6 +33,8 @@ public class PlayerShooting : MonoBehaviour
             {
                 BulletCount = MinBulletCount;
             }
+
+            bullet.GetComponent<BulletBehaviour>().sourcePlayer = sourcePlayer;
         }
     }
 

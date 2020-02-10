@@ -7,24 +7,26 @@ public class Player : Agent
 {
     private const float BooleanTrigger = 0.5f;
     private const string BulletPackTag = "Bullet Pack";
-    private const string BulletTag = "Bullet";
     private const string HealthPackTag = "Health Pack";
 
-    private PlayerHealth playerHealth;
-    private PlayerMovement playerMovement;
-    private PlayerShooting playerShooting;
+    private const float ItemFoundReward = 0.02f;
+    private const float BulletHitReward = 0.025f;
+    private const float KillReward = 0.1f;
+    private const float WinReward = 1f;
 
-    private Rigidbody2D rb;
+    private const float DeathPunishment = -0.5f;
+
+    public PlayerHealth playerHealth;
+    public PlayerMovement playerMovement;
+    public PlayerShooting playerShooting;
+    public Rigidbody2D rb;
+
     private Camera cam;
     private Vector2 mousePos;
 
     void Awake()
     {
-        playerHealth = GetComponent<PlayerHealth>();
-        playerMovement = GetComponent<PlayerMovement>();
-        playerShooting = GetComponent<PlayerShooting>();
         cam = FindObjectOfType<Camera>();
-        rb = GetComponent<Rigidbody2D>();
     }
 
     public override void AgentAction(float[] vectorAction)
@@ -39,30 +41,32 @@ public class Player : Agent
         if (isShooting)
         {
             playerShooting.Shoot();
-            // TODO : Add reward for shooting other agent
         }
 
         // Agent health pack state
         bool isUsingHealthPack = vectorAction[4] >= BooleanTrigger;
         if (isUsingHealthPack)
         {
-            playerHealth.UseHealthPack();
-            // TODO : Add reward for using health pack
+            int health = playerHealth.UseHealthPack();
+            AddReward(health / 1000f);
         }
 
         // Check if agent win
         if (StageAcademy.playerCount <= 1 && gameObject.activeSelf)
         {
+            AddReward(WinReward);
             Done();
-            // TODO : Add reward for winning the game
         }
 
         // Agent death condition
         if (playerHealth.CheckDeath())
         {
+            StageAcademy.playerCount--;
             gameObject.SetActive(false);
-            // TODO : Add punishmend for death
+            AddReward(DeathPunishment);
         }
+
+        //Debug.Log(rewa)
     }
 
     public override float[] Heuristic()
@@ -126,21 +130,39 @@ public class Player : Agent
         Destroy(gameObject);
     }
 
+    public void AgentHitReward()
+    {
+        AddReward(BulletHitReward);
+    }
+
+    public void AgentHitPunishment()
+    {
+        int damage = playerHealth.AgentInjured();
+        AddReward(damage / 1000f);
+    }
+
+    public void AgentKillReward()
+    { 
+        AddReward(KillReward);
+    }
+
+    public bool CheckDeath()
+    {
+        return playerHealth.CheckDeath();
+    }
+
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag(BulletTag))
-        {
-            playerHealth.AgentInjured();
-            Destroy(collision.gameObject);
-        }
-        else if (collision.gameObject.CompareTag(HealthPackTag))
+        if (collision.gameObject.CompareTag(HealthPackTag))
         {
             playerHealth.GetHealthPack();
+            AddReward(ItemFoundReward);
             Destroy(collision.gameObject);
         }
-        if (collision.gameObject.CompareTag(BulletPackTag))
+        else if (collision.gameObject.CompareTag(BulletPackTag))
         {
             playerShooting.GetBulletPack();
+            AddReward(ItemFoundReward);
             Destroy(collision.gameObject);
         }
     }

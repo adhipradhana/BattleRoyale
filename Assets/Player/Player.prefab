@@ -223,6 +223,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4562280534755094957, guid: b8acdb2e5c45044f390a84e974a82303,
     type: 3}
   bulletForce: 20
+  sourcePlayer: {fileID: 1385181549545170327}
 --- !u!114 &1385181549545170327
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -240,6 +241,10 @@ MonoBehaviour:
     resetOnDone: 0
     onDemandDecision: 0
     numberOfActionsBetweenDecisions: 1
+  playerHealth: {fileID: 151732582}
+  playerMovement: {fileID: 5193124900433394878}
+  playerShooting: {fileID: 1430323750458562887}
+  rb: {fileID: 1991187455918025431}
 --- !u!1 &4852271967002871972
 GameObject:
   m_ObjectHideFlags: 0

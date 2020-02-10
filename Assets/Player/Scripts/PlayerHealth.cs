@@ -25,38 +25,50 @@ public class PlayerHealth : MonoBehaviour
     }
 
 
-    public void UseHealthPack()
+    public int UseHealthPack()
     {
-        if (Input.GetKeyDown(KeyCode.H))
-        { 
-            if ((health < MaxHealth) && (healthPack > MinHealthPack))
-            {
-                health += HealthAddition;
-                if (health > MaxHealth)
-                {
-                    health = MaxHealth;         
-                }
+        int addition = 0;
 
-                healthPack--;
+        if ((Health < MaxHealth) && (healthPack > MinHealthPack))
+        {
+            if ((MaxHealth - Health) < HealthAddition)
+            {
+                addition = MaxHealth - Health;
+                Health = MaxHealth;
             }
+            else
+            {
+                addition = HealthAddition;
+                Health += HealthAddition; 
+            }
+
+            healthPack--;
         }
+
+        return addition;
     }
 
     public bool CheckDeath()
     {
-        if (health < MinHealth)
-        {
-            StageAcademy.playerCount--;
-            return true;
-        }
-
-        return false;
+        return (health <= MinHealth);
     }
 
-    public void AgentInjured()
+    public int AgentInjured()
     {
-        Health -= BulletDamage;
-        Debug.Log("Player health " + Health);
+        int damage;
+
+        if (Health < BulletDamage)
+        {
+            damage = Health * -1;
+            Health = 0;
+        }
+        else
+        {
+            damage = BulletDamage * -1;
+            Health -= BulletDamage;
+        }
+
+        return damage;
     }
 
     public void GetHealthPack()
