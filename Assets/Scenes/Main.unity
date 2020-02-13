@@ -168,7 +168,7 @@ MonoBehaviour:
     type: 3}
   bulletPackNumber: 3
   healthPackNumber: 3
-  playerNumber: 2
+  playerNumber: 3
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0

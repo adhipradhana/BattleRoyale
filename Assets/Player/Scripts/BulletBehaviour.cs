@@ -33,6 +33,8 @@ public class BulletBehaviour : MonoBehaviour
             {
                 sourcePlayer.AgentKillReward();
             }
+
+            Destroy(gameObject);
         }
     }
 }

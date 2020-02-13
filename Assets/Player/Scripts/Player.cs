@@ -31,42 +31,43 @@ public class Player : Agent
 
     public override void AgentAction(float[] vectorAction)
     {
-        // Agent movement
-        Vector2 movement = new Vector2(vectorAction[0], vectorAction[1]);
-
-        playerMovement.Move(movement, vectorAction[2]);
-
-        // Agent shooting state
-        bool isShooting = vectorAction[3] >= BooleanTrigger;
-        if (isShooting)
+        if (gameObject.activeSelf)
         {
-            playerShooting.Shoot();
-        }
+            // Agent movement
+            Vector2 movement = new Vector2(vectorAction[0], vectorAction[1]);
 
-        // Agent health pack state
-        bool isUsingHealthPack = vectorAction[4] >= BooleanTrigger;
-        if (isUsingHealthPack)
-        {
-            int health = playerHealth.UseHealthPack();
-            AddReward(health / 1000f);
-        }
+            playerMovement.Move(movement, vectorAction[2]);
 
-        // Check if agent win
-        if (StageAcademy.playerCount <= 1 && gameObject.activeSelf)
-        {
-            AddReward(WinReward);
-            Done();
-        }
+            // Agent shooting state
+            bool isShooting = vectorAction[3] >= BooleanTrigger;
+            if (isShooting)
+            {
+                playerShooting.Shoot();
+            }
 
-        // Agent death condition
-        if (playerHealth.CheckDeath())
-        {
-            StageAcademy.playerCount--;
-            gameObject.SetActive(false);
-            AddReward(DeathPunishment);
-        }
+            // Agent health pack state
+            bool isUsingHealthPack = vectorAction[4] >= BooleanTrigger;
+            if (isUsingHealthPack)
+            {
+                int health = playerHealth.UseHealthPack();
+                AddReward(health / 1000f);
+            }
 
-        //Debug.Log(rewa)
+            // Check if agent win
+            if (StageAcademy.playerCount <= 1)
+            {
+                AddReward(WinReward);
+                Done();
+            }
+
+            // Agent death condition
+            if (playerHealth.CheckDeath())
+            {
+                StageAcademy.playerCount--;
+                AddReward(DeathPunishment);
+                gameObject.SetActive(false);
+            }
+        }
     }
 
     public override float[] Heuristic()
