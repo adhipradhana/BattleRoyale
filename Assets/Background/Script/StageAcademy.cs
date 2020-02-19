@@ -39,7 +39,7 @@ public class StageAcademy : Academy
     public int healthPackNumber = 5;
 
     [Header("Number of agents")]
-    public int playerNumber = 2;
+    public int agentNumber = 2;
 
     // ------------------------------------------------------
     // System defined variables - You don't need to touch these:
@@ -87,6 +87,18 @@ public class StageAcademy : Academy
     public static float minimumY = 0;
 
     #endregion
+
+    public override void InitializeAcademy()
+    {
+        ConfigReader config = new ConfigReader();
+        ConfigReader.Environment environment = config.ReadEnvironment();
+
+        mazeRows = environment.MazeRows;
+        mazeColumns = environment.MazeColumns;
+        bulletPackNumber = environment.BulletPackNumber;
+        healthPackNumber = environment.HealthPackNumber;
+        agentNumber = environment.AgentNumber;
+    }
 
     public override void AcademyReset()
     {
@@ -165,9 +177,9 @@ public class StageAcademy : Academy
         playerParent.transform.position = Vector2.zero;
         playerParent.name = "Players";
 
-        playerCount = playerNumber;
+        playerCount = agentNumber;
 
-        for (int i = 0; i < playerNumber; i++)
+        for (int i = 0; i < agentNumber; i++)
         {
             // Get random Vector2 value
             int index = Random.Range(0, emptyCellsClone.Count);

@@ -144,7 +144,7 @@ MonoBehaviour:
     vectorActionSize: 05000000
     vectorActionDescriptions: []
     vectorActionSpaceType: 1
-  m_Model: {fileID: 11400000, guid: 0691f9a7886864e2084b1ec57fd9f502, type: 3}
+  m_Model: {fileID: 0}
   m_InferenceDevice: 0
   m_BehaviorType: 0
   m_BehaviorName: PlayerBrain
@@ -264,7 +264,7 @@ MonoBehaviour:
   - Bullet
   - Bullet Pack
   - Health Pack
-  raysPerDirection: 3
+  raysPerDirection: 2
   maxRayDegrees: 45
   sphereCastRadius: 0
   rayLength: 500

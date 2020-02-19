@@ -1,0 +1,14 @@
+﻿mazeRows: 10
+mazeColumns: 10
+bulletPackNumber: 5
+healthPackNumber: 5
+agentNumber: 4
+agents:
+    - id: 1
+      speed: 10
+
+    - id: 2
+      speed: 10
+
+    - id: 3
+      speed: 10
