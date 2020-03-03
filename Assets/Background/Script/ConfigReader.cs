@@ -44,8 +44,7 @@ public class ConfigReader
 
     public class Agent
     {
-        [YamlMember(Alias = "id")]
-        public int ID { get; set; }
+        public string Type { get; set; }
         public float Speed { get; set; }
     }
 

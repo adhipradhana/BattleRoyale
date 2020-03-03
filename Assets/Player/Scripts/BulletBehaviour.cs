@@ -20,6 +20,7 @@ public class BulletBehaviour : MonoBehaviour
     {
         if (collision.gameObject.CompareTag(WallTag))
         {
+            sourcePlayer.AgentMissPunishment();
             Destroy(gameObject);
         }
         else if (collision.gameObject.CompareTag(AgentTag))

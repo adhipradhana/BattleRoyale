@@ -139,7 +139,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    vectorObservationSize: 6
+    vectorObservationSize: 7
     numStackedVectorObservations: 1
     vectorActionSize: 05000000
     vectorActionDescriptions: []
@@ -191,7 +191,7 @@ MonoBehaviour:
   firePoint: {fileID: 2357420876621064934}
   bulletPrefab: {fileID: 4562280534755094957, guid: b8acdb2e5c45044f390a84e974a82303,
     type: 3}
-  bulletForce: 20
+  bulletForce: 15
   sourcePlayer: {fileID: 1385181549545170327}
 --- !u!114 &1385181549545170327
 MonoBehaviour:
