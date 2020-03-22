@@ -63,7 +63,7 @@ public class Player : Agent
             }
 
             // Check if agent win
-            if (StageAcademy.playerCount <= 1)
+            if (AcademyValue.playerCount <= 1)
             {
                 AddReward(WinReward);
                 Done();
@@ -72,7 +72,7 @@ public class Player : Agent
             // Agent death condition
             if (playerHealth.CheckDeath())
             {
-                StageAcademy.playerCount--;
+                AcademyValue.playerCount--;
                 AddReward(DeathPunishment);
                 gameObject.SetActive(false);
             }
@@ -118,8 +118,8 @@ public class Player : Agent
     public override void CollectObservations()
     {
         // Add positional vector
-        AddVectorObs((transform.position.x - StageAcademy.minimumX) / (StageAcademy.maximumX - StageAcademy.minimumX));
-        AddVectorObs((transform.position.y - StageAcademy.minimumY) / (StageAcademy.maximumY - StageAcademy.minimumY));
+        AddVectorObs((transform.position.x - AcademyValue.minimumX) / (AcademyValue.maximumX - AcademyValue.minimumX));
+        AddVectorObs((transform.position.y - AcademyValue.minimumY) / (AcademyValue.maximumY - AcademyValue.minimumY));
 
         // Add rotational vector
         AddVectorObs((rb.rotation + 90f) / 180f);

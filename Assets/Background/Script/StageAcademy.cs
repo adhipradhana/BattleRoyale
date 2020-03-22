@@ -77,15 +77,6 @@ public class StageAcademy : Academy
     private GameObject itemParent;
     private GameObject playerParent;
 
-    // For global accessed player count
-    public static int playerCount;
-
-    // For global accessed minimum and maximum
-    public static float maximumX = 0;
-    public static float minimumX = 0;
-    public static float maximumY = 0;
-    public static float minimumY = 0;
-
     #endregion
 
     public override void InitializeAcademy()
@@ -177,7 +168,7 @@ public class StageAcademy : Academy
         playerParent.transform.position = Vector2.zero;
         playerParent.name = "Players";
 
-        playerCount = agentNumber;
+        AcademyValue.playerCount = agentNumber;
 
         for (int i = 0; i < agentNumber; i++)
         {
@@ -396,23 +387,23 @@ public class StageAcademy : Academy
 
     public void GetBorderValue(Vector2 position)
     {
-        if (position.x < minimumX)
+        if (position.x < AcademyValue.minimumX)
         {
-            minimumX = position.x - (cellSize / 2.0f);
+            AcademyValue.minimumX = position.x - (cellSize / 2.0f);
         }
 
-        if (position.x > maximumX)
+        if (position.x > AcademyValue.maximumX)
         {
-            maximumX = position.x + (cellSize / 2.0f);
+            AcademyValue.maximumX = position.x + (cellSize / 2.0f);
         }
 
-        if (position.y < minimumY)
+        if (position.y < AcademyValue.minimumY)
         {
-            minimumY = position.y - (cellSize / 2.0f);
+            AcademyValue.minimumY = position.y - (cellSize / 2.0f);
         }
-        if (position.x > maximumY)
+        if (position.x > AcademyValue.maximumY)
         {
-            maximumY = position.y + (cellSize / 2.0f);
+            AcademyValue.maximumY = position.y + (cellSize / 2.0f);
         }
     }
 
