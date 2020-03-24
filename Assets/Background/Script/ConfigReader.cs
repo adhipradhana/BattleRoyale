@@ -39,6 +39,7 @@ public class ConfigReader
         public int BulletPackNumber { get; set; }
         public int HealthPackNumber { get; set; }
         public int AgentNumber { get; set; }
+        public int GenerateStep { get; set; }
         public List<Agent> Agents { get; set; }
     }
 

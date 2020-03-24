@@ -38,6 +38,10 @@ public class StageAcademyStatic : Academy
     [Header("Number of agents")]
     public int agentNumber = 2;
 
+    [Header("Number of step to generate item")]
+    public int generateStep = 1000;
+    private int step = 0;
+
     // ------------------------------------------------------
     // System defined variables - You don't need to touch these:
     // ------------------------------------------------------
@@ -68,13 +72,24 @@ public class StageAcademyStatic : Academy
         bulletPackNumber = environment.BulletPackNumber;
         healthPackNumber = environment.HealthPackNumber;
         agentNumber = environment.AgentNumber;
+        generateStep = environment.GenerateStep;
     }
 
     public override void AcademyReset()
     {
+        step = 0;
         GenerateMaze(mazeRows, mazeColumns);
         GenerateItem(bulletPackNumber, healthPackNumber);
         GeneratePlayers();
+    }
+
+    public override void AcademyStep()
+    {
+        step++;
+        if (step % generateStep == 0) {
+            GenerateItem(bulletPackNumber, healthPackNumber);
+            step = 0;
+        }
     }
 
     private void GenerateMaze(int rows, int columns)

@@ -210,6 +210,9 @@ MonoBehaviour:
     resetOnDone: 0
     onDemandDecision: 0
     numberOfActionsBetweenDecisions: 1
+  body: {fileID: 3787827691337058604}
+  cone: {fileID: 1473947667630525536}
+  circle: {fileID: 58269992767811388}
   playerHealth: {fileID: 151732582}
   playerMovement: {fileID: 5193124900433394878}
   playerShooting: {fileID: 1430323750458562887}
