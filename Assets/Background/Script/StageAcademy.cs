@@ -126,7 +126,6 @@ public class StageAcademy : Academy
     public void InitializeVariable()
     {
         step = 0;
-        AcademyValue.gameDone = false;
     }
 
     public void GenerateItem(int bulletPackNumber, int healthPackNumber)

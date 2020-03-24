@@ -5,10 +5,6 @@ using MLAgents;
 
 public class Player : Agent
 {
-    public SpriteRenderer body;
-    public SpriteRenderer cone;
-    public CircleCollider2D circle;
-
     private const float BooleanTrigger = 0f;
     private const string BulletPackTag = "Bullet Pack";
     private const string HealthPackTag = "Health Pack";
@@ -29,8 +25,6 @@ public class Player : Agent
     private Camera cam;
     private Vector2 mousePos;
 
-    private bool isActive = true;
-
     void Awake()
     {
         cam = FindObjectOfType<Camera>();
@@ -38,12 +32,7 @@ public class Player : Agent
 
     public override void AgentAction(float[] vectorAction)
     {
-        if (AcademyValue.gameDone)
-        {
-            Done();
-        }
-
-        if (isActive)
+        if (gameObject.activeSelf)
         {
             // Agent movement
             float moveHorizontal = Mathf.Clamp(vectorAction[0], -1, 1);
@@ -77,7 +66,7 @@ public class Player : Agent
             if (AcademyValue.playerCount <= 1)
             {
                 AddReward(WinReward);
-                AcademyValue.gameDone = true;
+                Done();
             }
 
             // Agent death condition
@@ -85,8 +74,7 @@ public class Player : Agent
             {
                 AcademyValue.playerCount--;
                 AddReward(DeathPunishment);
-                DeactivateEverything();
-                isActive = false;
+                gameObject.SetActive(false);
             }
         }
     }
@@ -146,7 +134,7 @@ public class Player : Agent
         AddVectorObs(playerShooting.BulletCount);
 
         // Add death state
-        AddVectorObs(isActive);
+        AddVectorObs(gameObject.activeSelf);
     }
 
     public void AgentMissPunishment()
@@ -173,13 +161,6 @@ public class Player : Agent
     public bool CheckDeath()
     {
         return playerHealth.CheckDeath();
-    }
-
-    public void DeactivateEverything()
-    {
-        body.enabled = false;
-        cone.enabled = false;
-        circle.enabled = false;
     }
 
     void OnTriggerEnter2D(Collider2D collision)

@@ -95,7 +95,6 @@ public class StageAcademyStatic : Academy
     public void InitializeVariable()
     {
         step = 0;
-        AcademyValue.gameDone = false;
     }
 
     private void GenerateMaze(int rows, int columns)
