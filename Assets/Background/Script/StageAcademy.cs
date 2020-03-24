@@ -98,7 +98,7 @@ public class StageAcademy : Academy
 
     public override void AcademyReset()
     {
-        step = 0;
+        InitializeVariable();
         GenerateMaze(mazeRows, mazeColumns);
         GenerateItem(bulletPackNumber, healthPackNumber);
         GeneratePlayers();
@@ -121,6 +121,12 @@ public class StageAcademy : Academy
         mazeRows = rows;
         mazeColumns = columns;
         CreateLayout();
+    }
+
+    public void InitializeVariable()
+    {
+        step = 0;
+        AcademyValue.gameDone = false;
     }
 
     public void GenerateItem(int bulletPackNumber, int healthPackNumber)

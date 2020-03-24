@@ -77,7 +77,7 @@ public class StageAcademyStatic : Academy
 
     public override void AcademyReset()
     {
-        step = 0;
+        InitializeVariable();
         GenerateMaze(mazeRows, mazeColumns);
         GenerateItem(bulletPackNumber, healthPackNumber);
         GeneratePlayers();
@@ -90,6 +90,12 @@ public class StageAcademyStatic : Academy
             GenerateItem(bulletPackNumber, healthPackNumber);
             step = 0;
         }
+    }
+
+    public void InitializeVariable()
+    {
+        step = 0;
+        AcademyValue.gameDone = false;
     }
 
     private void GenerateMaze(int rows, int columns)

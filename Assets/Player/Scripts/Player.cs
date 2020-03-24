@@ -30,7 +30,6 @@ public class Player : Agent
     private Vector2 mousePos;
 
     private bool isActive = true;
-    private static bool gameDone = false;
 
     void Awake()
     {
@@ -39,7 +38,7 @@ public class Player : Agent
 
     public override void AgentAction(float[] vectorAction)
     {
-        if (gameDone)
+        if (AcademyValue.gameDone)
         {
             Done();
         }
@@ -78,7 +77,7 @@ public class Player : Agent
             if (AcademyValue.playerCount <= 1)
             {
                 AddReward(WinReward);
-                gameDone = true;
+                AcademyValue.gameDone = true;
             }
 
             // Agent death condition
@@ -148,11 +147,6 @@ public class Player : Agent
 
         // Add death state
         AddVectorObs(isActive);
-    }
-
-    public override void AgentOnDone()
-    {
-        Destroy(gameObject);
     }
 
     public void AgentMissPunishment()
