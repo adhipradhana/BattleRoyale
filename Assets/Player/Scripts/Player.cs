@@ -9,13 +9,13 @@ public class Player : Agent
     private const string BulletPackTag = "Bullet Pack";
     private const string HealthPackTag = "Health Pack";
 
-    private const float ItemFoundReward = 0.02f;
-    private const float BulletHitReward = 0.025f;
-    private const float KillReward = 0.1f;
-    private const float WinReward = 1f;
+    private const float ItemFoundReward = 0.005f;
+    private const float BulletHitReward = 0.25f;
+    private const float KillReward = 1f;
+    private const float WinReward = 10f;
 
-    private const float DeathPunishment = -0.5f;
-    private const float BulletMissPunishment = 0.01f;
+    private const float DeathPunishment = -2f;
+    private const float BulletMissPunishment = -0.1f;
 
     public PlayerHealth playerHealth;
     public PlayerMovement playerMovement;
@@ -59,7 +59,7 @@ public class Player : Agent
             if (isUsingHealthPack)
             {
                 int health = playerHealth.UseHealthPack();
-                AddReward(health / 1000f);
+                AddReward(health / 100f);
             }
 
             // Check if agent win
@@ -150,7 +150,7 @@ public class Player : Agent
     public void AgentHitPunishment()
     {
         int damage = playerHealth.AgentInjured();
-        AddReward(damage / 1000f);
+        AddReward(damage / 100f);
     }
 
     public void AgentKillReward()
