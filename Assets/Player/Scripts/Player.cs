@@ -11,10 +11,10 @@ public class Player : Agent
 
     private const float ItemFoundReward = 0.001f;
     private const float BulletHitReward = 0.025f;
-    private const float KillReward = 0.1f;
+    private const float KillReward = 0.25f;
     private const float WinReward = 1f;
 
-    private const float DeathPunishment = -0.2f;
+    private const float DeathPunishment = -0.5f;
     private const float BulletMissPunishment = -0.0005f;
 
     public PlayerHealth playerHealth;
