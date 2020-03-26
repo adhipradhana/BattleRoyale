@@ -11,4 +11,6 @@ public class AcademyValue : MonoBehaviour
     public static float minimumX = 0;
     public static float maximumY = 0;
     public static float minimumY = 0;
+
+    public static bool gameDone = false;
 }

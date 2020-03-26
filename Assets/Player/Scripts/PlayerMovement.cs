@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void Move(Vector2 movement, float angle)
     {
-        rb.MovePosition(rb.position + movement * moveSpeed * Time.deltaTime);
+        rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
 
         angle = angle * Mathf.Rad2Deg - 90f;
         rb.rotation = angle;

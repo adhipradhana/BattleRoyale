@@ -87,7 +87,7 @@ public class StageAcademyStatic : Academy
     {
         step++;
         if (step % generateStep == 0) {
-            GenerateItem(bulletPackNumber, healthPackNumber);
+            SpawnItem(bulletPackNumber, healthPackNumber);
             step = 0;
         }
     }
@@ -95,6 +95,7 @@ public class StageAcademyStatic : Academy
     public void InitializeVariable()
     {
         step = 0;
+        AcademyValue.gameDone = false;
     }
 
     private void GenerateMaze(int rows, int columns)
@@ -113,6 +114,51 @@ public class StageAcademyStatic : Academy
         itemParent.transform.position = Vector2.zero;
         itemParent.name = "Item";
 
+        // Clone item key
+        emptyCellsClone = new List<Vector2>();
+        foreach (Vector2 key in emptyCells)
+        {
+            emptyCellsClone.Add(new Vector2(key.x, key.y));
+        }
+
+        // Check if item is more than cell number
+        int cellCount = emptyCells.Count;
+        int itemCount = bulletPackNumber + healthPackNumber;
+
+        if (itemCount > cellCount)
+        {
+            itemCount = cellCount;
+            bulletPackNumber = itemCount / 2;
+            healthPackNumber = itemCount / 2;
+        }
+
+        for (int i = 0; i < bulletPackNumber; i++)
+        {
+            // Get random Vector2 value
+            int index = Random.Range(0, emptyCellsClone.Count);
+            Vector2 position = emptyCellsClone[index];
+            emptyCellsClone.Remove(position);
+
+            GameObject bulletPack = Instantiate(bulletPackPrefab);
+            bulletPack.transform.position = position;
+            bulletPack.transform.SetParent(itemParent.transform);
+        }
+
+        for (int i = 0; i < healthPackNumber; i++)
+        {
+            // Get random Vector2 value
+            int index = Random.Range(0, emptyCellsClone.Count);
+            Vector2 position = emptyCellsClone[index];
+            emptyCellsClone.Remove(position);
+
+            GameObject healthPack = Instantiate(healthPackPrefab);
+            healthPack.transform.position = position;
+            healthPack.transform.SetParent(itemParent.transform);
+        }
+    }
+
+    public void SpawnItem(int bulletPackNumber, int healthPackNumber)
+    {
         // Clone item key
         emptyCellsClone = new List<Vector2>();
         foreach (Vector2 key in emptyCells)
