@@ -140,7 +140,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_BrainParameters:
     vectorObservationSize: 7
-    numStackedVectorObservations: 3
+    numStackedVectorObservations: 1
     vectorActionSize: 05000000
     vectorActionDescriptions: []
     vectorActionSpaceType: 1
@@ -274,7 +274,7 @@ MonoBehaviour:
   rayLayerMask:
     serializedVersion: 2
     m_Bits: 769
-  observationStacks: 3
+  observationStacks: 1
   rayHitColor: {r: 0, g: 1, b: 0.17619658, a: 1}
   rayMissColor: {r: 0, g: 0.29986405, b: 1, a: 1}
   useWorldPositions: 1

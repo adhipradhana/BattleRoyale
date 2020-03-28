@@ -7,7 +7,7 @@ public class PlayerHealth : MonoBehaviour
     public const int MaxHealth = 100;
     private const int MinHealth = 0;
     private const int HealthAddition = 40;
-    private const int BulletDamage = 30;
+    private const int BulletDamage = 25;
     private const int MinHealthPack = 0;
 
     private int health = 100;
