@@ -191,7 +191,7 @@ MonoBehaviour:
   firePoint: {fileID: 2357420876621064934}
   bulletPrefab: {fileID: 4562280534755094957, guid: b8acdb2e5c45044f390a84e974a82303,
     type: 3}
-  bulletForce: 15
+  bulletForce: 20
   sourcePlayer: {fileID: 1385181549545170327}
 --- !u!114 &1385181549545170327
 MonoBehaviour:
@@ -209,7 +209,7 @@ MonoBehaviour:
     maxStep: 0
     resetOnDone: 0
     onDemandDecision: 0
-    numberOfActionsBetweenDecisions: 1
+    numberOfActionsBetweenDecisions: 10
   body: {fileID: 3787827691337058604}
   cone: {fileID: 1473947667630525536}
   circle: {fileID: 58269992767811388}

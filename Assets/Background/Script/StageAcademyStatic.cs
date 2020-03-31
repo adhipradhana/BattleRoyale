@@ -59,6 +59,7 @@ public class StageAcademyStatic : Academy
     // Parent of each group
     private GameObject itemParent;
     private GameObject playerParent;
+    private List<GameObject> playersList = new List<GameObject>();
 
     #endregion
 
@@ -85,6 +86,14 @@ public class StageAcademyStatic : Academy
 
     public override void AcademyStep()
     {
+        if (AcademyValue.gameDone)
+        {
+            foreach (GameObject player in playersList)
+            {
+                player.GetComponent<Player>().Done();
+            }
+        }
+
         step++;
         if (step % generateStep == 0) {
             SpawnItem(bulletPackNumber, healthPackNumber);
@@ -96,6 +105,7 @@ public class StageAcademyStatic : Academy
     {
         step = 0;
         AcademyValue.gameDone = false;
+        playersList.Clear();
     }
 
     private void GenerateMaze(int rows, int columns)
@@ -160,7 +170,7 @@ public class StageAcademyStatic : Academy
     public void SpawnItem(int bulletPackNumber, int healthPackNumber)
     {
         // Clone item key
-        emptyCellsClone = new List<Vector2>();
+        emptyCellsClone.Clear();
         foreach (Vector2 key in emptyCells)
         {
             emptyCellsClone.Add(new Vector2(key.x, key.y));
@@ -223,6 +233,8 @@ public class StageAcademyStatic : Academy
             GameObject player = Instantiate(playerPrefab);
             player.transform.position = position;
             player.transform.SetParent(playerParent.transform);
+
+            playersList.Add(player);
         }
     }
 

@@ -15,11 +15,11 @@ public class Player : Agent
 
     private const float ItemFoundReward = 0.25f;
     private const float BulletHitReward = 1f;
-    private const float KillReward = 2.5f;
+    private const float KillReward = 5f;
     private const float WinReward = 10f;
 
     private const float DeathPunishment = -5f;
-    private const float BulletMissPunishment = -0.05f;
+    private const float BulletMissPunishment = -0.1f;
 
     public PlayerHealth playerHealth;
     public PlayerMovement playerMovement;
@@ -30,6 +30,9 @@ public class Player : Agent
     private Vector2 mousePos;
 
     private bool isActive = true;
+    private int stepShooting = 0;
+    private int stepHealth = 0;
+    private const int stepReset = 10;
 
     void Awake()
     {
@@ -38,12 +41,7 @@ public class Player : Agent
 
     public override void AgentAction(float[] vectorAction)
     {
-        if (AcademyValue.gameDone)
-        {
-            Done();
-        }
-
-        if (isActive)
+        if (isActive && !AcademyValue.gameDone)
         {
             // Agent movement
             float moveHorizontal = Mathf.Clamp(vectorAction[0], -1, 1);
@@ -60,7 +58,12 @@ public class Player : Agent
             bool isShooting = vectorAction[3] >= BooleanTrigger;
             if (isShooting)
             {
-                playerShooting.Shoot();
+                if (stepShooting % stepReset == 0)
+                {
+                    playerShooting.Shoot();
+                }
+
+                stepShooting++;
             }
 
             // Agent health pack state
@@ -68,8 +71,13 @@ public class Player : Agent
             bool isUsingHealthPack = vectorAction[4] >= BooleanTrigger;
             if (isUsingHealthPack)
             {
-                int health = playerHealth.UseHealthPack();
-                AddReward(health / 100f);
+                if (stepHealth % stepReset == 0)
+                {
+                    int health = playerHealth.UseHealthPack();
+                    AddReward(health / 100f);
+                }
+
+                stepHealth++;
             }
 
             // Check if agent win
@@ -78,9 +86,7 @@ public class Player : Agent
                 AddReward(WinReward);
                 AcademyValue.gameDone = true;
             }
-
-            // Agent death condition
-            if (playerHealth.CheckDeath())
+            else if (playerHealth.CheckDeath())
             {
                 AddReward(DeathPunishment);
                 DeactivateEverything();

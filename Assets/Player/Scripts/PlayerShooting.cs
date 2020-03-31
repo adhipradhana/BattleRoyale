@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerShooting : MonoBehaviour
 {
-    private const int BulletPackAddition = 10;
+    private const int BulletPackAddition = 5;
     private const int MinBulletCount = 0;
 
     public Transform firePoint;
