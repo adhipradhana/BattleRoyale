@@ -281,9 +281,13 @@ MonoBehaviour:
     type: 3}
   playerPrefab: {fileID: 3787827691337058605, guid: 827402954f4384a20b9ad8f3b2d9d4a1,
     type: 3}
+  aggresivePlayerPrefab: {fileID: 3787827691337058605, guid: 5ae6efac7936d4f3f8e612e358496328,
+    type: 3}
   bulletPackNumber: 3
   healthPackNumber: 3
   agentNumber: 2
+  normalAgentCount: 0
+  aggresiveAgentCount: 0
   generateStep: 1000
 --- !u!114 &288434267
 MonoBehaviour:

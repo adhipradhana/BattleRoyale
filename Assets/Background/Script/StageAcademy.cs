@@ -33,6 +33,7 @@ public class StageAcademy : Academy
 
     [Header("Player prefab object.")]
     public GameObject playerPrefab;
+    public GameObject aggresivePlayerPrefab;
 
     [Header("Item generation number")]
     public int bulletPackNumber = 5;
@@ -40,6 +41,8 @@ public class StageAcademy : Academy
 
     [Header("Number of agents")]
     public int agentNumber = 2;
+    public int normalAgentCount;
+    public int aggresiveAgentCount;
 
     [Header("Number of step to generate item")]
     public int generateStep = 1000;
@@ -94,6 +97,8 @@ public class StageAcademy : Academy
         healthPackNumber = environment.HealthPackNumber;
         agentNumber = environment.AgentNumber;
         generateStep = environment.GenerateStep;
+        normalAgentCount = environment.NormalCount;
+        aggresiveAgentCount = environment.AggresiveCount;
     }
 
     public override void AcademyReset()
@@ -237,7 +242,7 @@ public class StageAcademy : Academy
 
         AcademyValue.playerCount = agentNumber;
 
-        for (int i = 0; i < agentNumber; i++)
+        for (int i = 0; i < normalAgentCount; i++)
         {
             // Get random Vector2 value
             int index = Random.Range(0, emptyCellsClone.Count);
@@ -245,6 +250,18 @@ public class StageAcademy : Academy
             emptyCellsClone.Remove(position);
 
             GameObject player = Instantiate(playerPrefab);
+            player.transform.position = position;
+            player.transform.SetParent(playerParent.transform);
+        }
+
+        for (int i = 0; i < aggresiveAgentCount; i++)
+        {
+            // Get random Vector2 value
+            int index = Random.Range(0, emptyCellsClone.Count);
+            Vector2 position = emptyCellsClone[index];
+            emptyCellsClone.Remove(position);
+
+            GameObject player = Instantiate(aggresivePlayerPrefab);
             player.transform.position = position;
             player.transform.SetParent(playerParent.transform);
         }

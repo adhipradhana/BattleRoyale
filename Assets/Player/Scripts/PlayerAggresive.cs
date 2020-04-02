@@ -3,36 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using MLAgents;
 
-public class Player : Agent
+public class PlayerAggresive : Player
 {
-    public SpriteRenderer body;
-    public SpriteRenderer cone;
-    public CircleCollider2D circle;
-
     private const float BooleanTrigger = 0f;
     private const string BulletPackTag = "Bullet Pack";
     private const string HealthPackTag = "Health Pack";
 
-    protected const float ItemFoundReward = 0.25f;
-    private const float BulletHitReward = 0.1f;
-    private const float KillReward = 1f;
-    protected const float WinReward = 5f;
-
-    protected const float DeathPunishment = -1f;
-    private const float BulletMissPunishment = -0.01f;
-
-    public PlayerHealth playerHealth;
-    public PlayerMovement playerMovement;
-    public PlayerShooting playerShooting;
-    public Rigidbody2D rb;
-
-    protected Camera cam;
-    protected Vector2 mousePos;
-
-    protected bool isActive = true;
-    protected int stepShooting = 0;
-    protected int stepHealth = 0;
-    protected const int stepReset = 10;
+    private const float MoveReward = 0.001f;
 
     void Awake()
     {
@@ -45,7 +22,17 @@ public class Player : Agent
         {
             // Agent movement
             float moveHorizontal = Mathf.Clamp(vectorAction[0], -1, 1);
+            if (moveHorizontal > 0.75f || moveHorizontal < -0.75f)
+            {
+                AddReward(MoveReward);
+            }
+
             float moveVertical = Mathf.Clamp(vectorAction[1], -1, 1);
+            if (moveVertical > 0.75f || moveVertical < -0.75f)
+            {
+                AddReward(MoveReward);
+            }
+
             Vector2 movement = new Vector2(moveHorizontal, moveVertical);
 
             // Agent rotation
@@ -154,38 +141,6 @@ public class Player : Agent
         AddVectorObs(isActive);
     }
 
-    public void AgentMissPunishment()
-    {
-        AddReward(BulletMissPunishment);
-    }
-
-    public void AgentHitReward()
-    {
-        AddReward(BulletHitReward);
-    }
-
-    public void AgentHitPunishment()
-    {
-        int damage = playerHealth.AgentInjured();
-        AddReward(damage / 100f);
-    }
-
-    public void AgentKillReward()
-    { 
-        AddReward(KillReward);
-    }
-
-    public bool CheckDeath()
-    {
-        return playerHealth.CheckDeath();
-    }
-
-    public void DeactivateEverything()
-    {
-        body.enabled = false;
-        cone.enabled = false;
-        circle.enabled = false;
-    }
 
     void OnTriggerEnter2D(Collider2D collision)
     {

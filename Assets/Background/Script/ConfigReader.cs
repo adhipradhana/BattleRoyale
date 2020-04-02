@@ -40,13 +40,9 @@ public class ConfigReader
         public int HealthPackNumber { get; set; }
         public int AgentNumber { get; set; }
         public int GenerateStep { get; set; }
-        public List<Agent> Agents { get; set; }
+        public int NormalCount { get; set; }
+        public int AggresiveCount { get; set; }
     }
 
-    public class Agent
-    {
-        public string Type { get; set; }
-        public float Speed { get; set; }
-    }
 
 }
