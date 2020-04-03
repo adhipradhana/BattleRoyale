@@ -238,6 +238,8 @@ public class StageAcademyStatic : Academy
             GameObject player = Instantiate(playerPrefab);
             player.transform.position = position;
             player.transform.SetParent(playerParent.transform);
+
+            playersList.Add(player);
         }
 
         for (int i = 0; i < aggresiveAgentCount; i++)
@@ -250,6 +252,8 @@ public class StageAcademyStatic : Academy
             GameObject player = Instantiate(aggresivePlayerPrefab);
             player.transform.position = position;
             player.transform.SetParent(playerParent.transform);
+
+            playersList.Add(player);
         }
     }
 
