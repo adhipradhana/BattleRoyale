@@ -130,7 +130,7 @@ public class StageAcademyStatic : Academy
         itemParent.name = "Item";
 
         // Clone item key
-        emptyCellsClone = new List<Vector2>();
+        emptyCellsClone.Clear();
         foreach (Vector2 key in emptyCells)
         {
             emptyCellsClone.Add(new Vector2(key.x, key.y));

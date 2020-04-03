@@ -198,8 +198,8 @@ public class StageAcademy : Academy
 
     public void SpawnItem(int bulletPackNumber, int healthPackNumber)
     {
-         // Clone item key
-        emptyCellsClone = new List<Vector2>();
+        // Clone item key
+        emptyCellsClone.Clear();
         foreach (Vector2 key in emptyCells)
         {
             emptyCellsClone.Add(new Vector2(key.x, key.y));
