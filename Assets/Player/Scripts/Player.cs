@@ -12,10 +12,10 @@ public class Player : Agent
     private const float BooleanTrigger = 0f;
     private const string BulletPackTag = "Bullet Pack";
 
-    protected const float ItemFoundReward = 0.25f;
+    protected const float ItemFoundReward = 0.025f;
     private const float BulletHitReward = 0.1f;
-    private const float KillReward = 0.5f;
-    protected const float WinReward = 1f;
+    private const float KillReward = 0.75f;
+    protected const float WinReward = 2.5f;
 
     protected const float DeathPunishment = -1f;
     private const float BulletMissPunishment = -0.01f;
