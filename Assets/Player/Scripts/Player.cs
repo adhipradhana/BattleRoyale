@@ -9,7 +9,7 @@ public class Player : Agent
     public SpriteRenderer cone;
     public CircleCollider2D circle;
 
-    private const float BooleanTrigger = 0f;
+    protected const float BooleanTrigger = 0f;
     private const string BulletPackTag = "Bullet Pack";
 
     protected const float ItemFoundReward = 0.025f;
@@ -180,7 +180,7 @@ public class Player : Agent
         circle.enabled = false;
     }
 
-    void OnTriggerEnter2D(Collider2D collision)
+    protected void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag(BulletPackTag))
         {
