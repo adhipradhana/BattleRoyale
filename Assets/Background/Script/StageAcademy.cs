@@ -299,6 +299,8 @@ public class StageAcademy : Academy
 
                 GenerateCell(spawnPos, new Vector2(x, y));
 
+                RemoveVerticalWall(new Vector2(x, y));
+
                 // Increase spawnPos y.
                 spawnPos.y += cellSize;
             }
@@ -308,91 +310,44 @@ public class StageAcademy : Academy
             spawnPos.x += cellSize;
         }
 
-        CreateCentre();
-        RunAlgorithm();
+        GenerateArena();
     }
 
-    // This is where the fun stuff happens.
-    public void RunAlgorithm()
+    public void RemoveVerticalWall(Vector2 vector)
     {
-        // Get start cell, make it visited (i.e. remove from unvisited list).
-        unvisited.Remove(currentCell);
-
-        // While we have unvisited cells.
-        while (unvisited.Count > 0)
+        if (vector.x != 1)
         {
-            List<Cell> unvisitedNeighbours = GetUnvisitedNeighbours(currentCell);
-            if (unvisitedNeighbours.Count > 0)
+            RemoveWall(allCells[vector].cScript, 1);
+        }
+
+        if (vector.x != mazeColumns)
+        {
+            RemoveWall(allCells[vector].cScript, 2);
+        }
+    }
+
+    public void GenerateArena()
+    {
+        int spawnableWallAmount = mazeColumns / 2;
+        bool[] flag;
+
+        for (int y = 1; y < mazeRows; y++)
+        {
+            flag = new bool[mazeColumns+1];
+
+            for (int i = 0; i < spawnableWallAmount; i++)
             {
-                // Get a random unvisited neighbour.
-                checkCell = unvisitedNeighbours[Random.Range(0, unvisitedNeighbours.Count)];
-                // Add current cell to stack.
-                stack.Add(currentCell);
-                // Compare and remove walls.
-                CompareWalls(currentCell, checkCell);
-                // Make currentCell the neighbour cell.
-                currentCell = checkCell;
-                // Mark new current cell as visited.
-                unvisited.Remove(currentCell);
+                int x = Random.Range(1, mazeColumns + 1);
+
+                while(flag[x])
+                {
+                    x = Random.Range(1, mazeColumns + 1);
+                }
+
+                flag[x] = true;
+                RemoveWall(allCells[new Vector2(x, y)].cScript, 3);
+                RemoveWall(allCells[new Vector2(x, y+1)].cScript, 4);
             }
-            else if (stack.Count > 0)
-            {
-                // Make current cell the most recently added Cell from the stack.
-                currentCell = stack[stack.Count - 1];
-                // Remove it from stack.
-                stack.Remove(currentCell);
-            }
-        }
-    }
-
-    public List<Cell> GetUnvisitedNeighbours(Cell curCell)
-    {
-        // Create a list to return.
-        List<Cell> neighbours = new List<Cell>();
-        // Create a Cell object.
-        Cell nCell = curCell;
-        // Store current cell grid pos.
-        Vector2 cPos = curCell.gridPos;
-
-        foreach (Vector2 p in neighbourPositions)
-        {
-            // Find position of neighbour on grid, relative to current.
-            Vector2 nPos = cPos + p;
-            // If cell exists.
-            if (allCells.ContainsKey(nPos)) nCell = allCells[nPos];
-            // If cell is unvisited.
-            if (unvisited.Contains(nCell)) neighbours.Add(nCell);
-        }
-
-        return neighbours;
-    }
-
-    // Compare neighbour with current and remove appropriate walls.
-    public void CompareWalls(Cell cCell, Cell nCell)
-    {
-        // If neighbour is left of current.
-        if (nCell.gridPos.x < cCell.gridPos.x)
-        {
-            RemoveWall(nCell.cScript, 2);
-            RemoveWall(cCell.cScript, 1);
-        }
-        // Else if neighbour is right of current.
-        else if (nCell.gridPos.x > cCell.gridPos.x)
-        {
-            RemoveWall(nCell.cScript, 1);
-            RemoveWall(cCell.cScript, 2);
-        }
-        // Else if neighbour is above current.
-        else if (nCell.gridPos.y > cCell.gridPos.y)
-        {
-            RemoveWall(nCell.cScript, 4);
-            RemoveWall(cCell.cScript, 3);
-        }
-        // Else if neighbour is below current.
-        else if (nCell.gridPos.y < cCell.gridPos.y)
-        {
-            RemoveWall(nCell.cScript, 3);
-            RemoveWall(cCell.cScript, 4);
         }
     }
 
@@ -404,37 +359,6 @@ public class StageAcademy : Academy
         else if (wallID == 2) cScript.wallR.SetActive(false);
         else if (wallID == 3) cScript.wallU.SetActive(false);
         else if (wallID == 4) cScript.wallD.SetActive(false);
-    }
-
-    public void CreateCentre()
-    {
-        // Get the 4 centre cells using the rows and columns variables.
-        // Remove the required walls for each.
-        centreCells[0] = allCells[new Vector2((mazeColumns / 2), (mazeRows / 2) + 1)];
-        RemoveWall(centreCells[0].cScript, 4);
-        RemoveWall(centreCells[0].cScript, 2);
-        centreCells[1] = allCells[new Vector2((mazeColumns / 2) + 1, (mazeRows / 2) + 1)];
-        RemoveWall(centreCells[1].cScript, 4);
-        RemoveWall(centreCells[1].cScript, 1);
-        centreCells[2] = allCells[new Vector2((mazeColumns / 2), (mazeRows / 2))];
-        RemoveWall(centreCells[2].cScript, 3);
-        RemoveWall(centreCells[2].cScript, 2);
-        centreCells[3] = allCells[new Vector2((mazeColumns / 2) + 1, (mazeRows / 2))];
-        RemoveWall(centreCells[3].cScript, 3);
-        RemoveWall(centreCells[3].cScript, 1);
-
-        // Create a List of ints, using this, select one at random and remove it.
-        // We then use the remaining 3 ints to remove 3 of the centre cells from the 'unvisited' list.
-        // This ensures that one of the centre cells will connect to the maze but the other three won't.
-        // This way, the centre room will only have 1 entry / exit point.
-        List<int> rndList = new List<int> { 0, 1, 2, 3 };
-        int startCell = rndList[Random.Range(0, rndList.Count)];
-        rndList.Remove(startCell);
-        currentCell = centreCells[startCell];
-        foreach (int c in rndList)
-        {
-            unvisited.Remove(centreCells[c]);
-        }
     }
 
     public void GenerateCell(Vector2 pos, Vector2 keyPos)
