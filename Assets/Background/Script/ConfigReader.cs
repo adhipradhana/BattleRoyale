@@ -34,14 +34,14 @@ public class ConfigReader
 
     public class Environment
     {
-        public int MazeRows { get; set; }
-        public int MazeColumns { get; set; }
+        public int ArenaRows { get; set; }
+        public int ArenaColumns { get; set; }
         public int BulletPackNumber { get; set; }
-        public int HealthPackNumber { get; set; }
         public int AgentNumber { get; set; }
+        public int NormalNumber { get; set; }
+        public int AggresiveNumber { get; set; }
+        public int PassiveNumber { get; set; }
         public int GenerateStep { get; set; }
-        public int NormalCount { get; set; }
-        public int AggresiveCount { get; set; }
     }
 
 

@@ -5,6 +5,15 @@ using MLAgents;
 
 public class Player : Agent
 {
+    public enum PlayerType {
+        Normal,
+        Aggresive,
+        Passive
+    }
+
+    // Agent type
+    public PlayerType playerType;
+
     public SpriteRenderer body;
     public SpriteRenderer cone;
     public CircleCollider2D circle;
@@ -19,6 +28,11 @@ public class Player : Agent
 
     protected const float DeathPunishment = -1f;
     private const float BulletMissPunishment = -0.01f;
+
+    // Movement reward for aggresive agent and passive agent
+    private Vector2 previousPosition;
+    private const float MoveReward = 0.001f;
+    private const float MovePunishment = -0.001f;
 
     public PlayerHealth playerHealth;
     public PlayerMovement playerMovement;
@@ -36,6 +50,7 @@ public class Player : Agent
     void Awake()
     {
         cam = FindObjectOfType<Camera>();
+        previousPosition = new Vector2(transform.position.x, transform.position.y);
     }
 
     public override void AgentAction(float[] vectorAction)
@@ -61,6 +76,25 @@ public class Player : Agent
 
 
             playerMovement.Move(movement, moveRotation);
+
+            // add movement reward if agent type different
+            if (playerType != PlayerType.Normal)
+            {
+                if (Vector2.Distance(transform.position, previousPosition) >= 1)
+                {
+                    previousPosition.x = transform.position.x;
+                    previousPosition.y = transform.position.y;
+
+                    if (playerType == PlayerType.Aggresive)
+                    {
+                        AddReward(MoveReward);
+                    }
+                    else if (playerType == PlayerType.Passive)
+                    {
+                        AddReward(MovePunishment);
+                    }
+                }
+            }
 
             // Agent shooting state
             vectorAction[4] = Mathf.Clamp(vectorAction[4], -1, 1);

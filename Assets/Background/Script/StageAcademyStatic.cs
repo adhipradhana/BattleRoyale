@@ -26,20 +26,20 @@ public class StageAcademyStatic : Academy
 
     [Header("Item generation prefab object.")]
     public GameObject bulletPackPrefab;
-    public GameObject healthPackPrefab;
 
     [Header("Player prefab object.")]
     public GameObject playerPrefab;
     public GameObject aggresivePlayerPrefab;
+    public GameObject passivePlayerPrefab;
 
     [Header("Item generation number")]
     public int bulletPackNumber = 5;
-    public int healthPackNumber = 5;
 
     [Header("Number of agents")]
     public int agentNumber = 2;
     public int normalAgentCount;
     public int aggresiveAgentCount;
+    public int passiveAgentCount;
 
     [Header("Number of step to generate item")]
     public int generateStep = 1000;
@@ -71,21 +71,21 @@ public class StageAcademyStatic : Academy
         ConfigReader config = new ConfigReader();
         ConfigReader.Environment environment = config.ReadEnvironment();
 
-        mazeRows = environment.MazeRows;
-        mazeColumns = environment.MazeColumns;
+        mazeRows = environment.ArenaRows;
+        mazeColumns = environment.ArenaColumns;
         bulletPackNumber = environment.BulletPackNumber;
-        healthPackNumber = environment.HealthPackNumber;
         agentNumber = environment.AgentNumber;
+        normalAgentCount = environment.NormalNumber;
+        aggresiveAgentCount = environment.AggresiveNumber;
         generateStep = environment.GenerateStep;
-        normalAgentCount = environment.NormalCount;
-        aggresiveAgentCount = environment.AggresiveCount;
+
     }
 
     public override void AcademyReset()
     {
         InitializeVariable();
         GenerateMaze(mazeRows, mazeColumns);
-        GenerateItem(bulletPackNumber, healthPackNumber);
+        GenerateItem(bulletPackNumber);
         GeneratePlayers();
     }
 
@@ -101,7 +101,7 @@ public class StageAcademyStatic : Academy
 
         step++;
         if (step % generateStep == 0) {
-            SpawnItem(bulletPackNumber, healthPackNumber);
+            SpawnItem(bulletPackNumber);
             step = 0;
         }
     }
@@ -120,7 +120,7 @@ public class StageAcademyStatic : Academy
         CreateLayout();
     }
 
-    public void GenerateItem(int bulletPackNumber, int healthPackNumber)
+    public void GenerateItem(int bulletPackNumber)
     {
         if (itemParent != null) Destroy(itemParent);
 
@@ -138,13 +138,12 @@ public class StageAcademyStatic : Academy
 
         // Check if item is more than cell number
         int cellCount = emptyCells.Count;
-        int itemCount = bulletPackNumber + healthPackNumber;
+        int itemCount = bulletPackNumber;
 
         if (itemCount > cellCount)
         {
             itemCount = cellCount;
             bulletPackNumber = itemCount / 2;
-            healthPackNumber = itemCount / 2;
         }
 
         for (int i = 0; i < bulletPackNumber; i++)
@@ -158,21 +157,9 @@ public class StageAcademyStatic : Academy
             bulletPack.transform.position = position;
             bulletPack.transform.SetParent(itemParent.transform);
         }
-
-        for (int i = 0; i < healthPackNumber; i++)
-        {
-            // Get random Vector2 value
-            int index = Random.Range(0, emptyCellsClone.Count);
-            Vector2 position = emptyCellsClone[index];
-            emptyCellsClone.Remove(position);
-
-            GameObject healthPack = Instantiate(healthPackPrefab);
-            healthPack.transform.position = position;
-            healthPack.transform.SetParent(itemParent.transform);
-        }
     }
 
-    public void SpawnItem(int bulletPackNumber, int healthPackNumber)
+    public void SpawnItem(int bulletPackNumber)
     {
         // Clone item key
         emptyCellsClone.Clear();
@@ -183,13 +170,12 @@ public class StageAcademyStatic : Academy
 
         // Check if item is more than cell number
         int cellCount = emptyCells.Count;
-        int itemCount = bulletPackNumber + healthPackNumber;
+        int itemCount = bulletPackNumber;
 
         if (itemCount > cellCount)
         {
             itemCount = cellCount;
             bulletPackNumber = itemCount / 2;
-            healthPackNumber = itemCount / 2;
         }
 
         for (int i = 0; i < bulletPackNumber; i++)
@@ -202,18 +188,6 @@ public class StageAcademyStatic : Academy
             GameObject bulletPack = Instantiate(bulletPackPrefab);
             bulletPack.transform.position = position;
             bulletPack.transform.SetParent(itemParent.transform);
-        }
-
-        for (int i = 0; i < healthPackNumber; i++)
-        {
-            // Get random Vector2 value
-            int index = Random.Range(0, emptyCellsClone.Count);
-            Vector2 position = emptyCellsClone[index];
-            emptyCellsClone.Remove(position);
-
-            GameObject healthPack = Instantiate(healthPackPrefab);
-            healthPack.transform.position = position;
-            healthPack.transform.SetParent(itemParent.transform);
         }
     }
 
@@ -250,6 +224,20 @@ public class StageAcademyStatic : Academy
             emptyCellsClone.Remove(position);
 
             GameObject player = Instantiate(aggresivePlayerPrefab);
+            player.transform.position = position;
+            player.transform.SetParent(playerParent.transform);
+
+            playersList.Add(player);
+        }
+
+        for (int i = 0; i < passiveAgentCount; i++)
+        {
+            // Get random Vector2 value
+            int index = Random.Range(0, emptyCellsClone.Count);
+            Vector2 position = emptyCellsClone[index];
+            emptyCellsClone.Remove(position);
+
+            GameObject player = Instantiate(passivePlayerPrefab);
             player.transform.position = position;
             player.transform.SetParent(playerParent.transform);
 
