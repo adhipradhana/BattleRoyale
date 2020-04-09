@@ -32,8 +32,6 @@ public class StageAcademy : Academy
 
     [Header("Player prefab object.")]
     public GameObject playerPrefab;
-    public GameObject aggresivePlayerPrefab;
-    public GameObject passivePlayerPrefab;
 
     [Header("Item generation number")]
     public int bulletPackNumber = 5;
@@ -234,6 +232,8 @@ public class StageAcademy : Academy
             emptyCellsClone.Remove(position);
 
             GameObject player = Instantiate(playerPrefab);
+            player.GetComponent<Player>().playerType = Player.PlayerType.Normal;
+            player.GetComponent<Player>().body.color = Color.red;
             player.transform.position = position;
             player.transform.SetParent(playerParent.transform);
 
@@ -247,7 +247,9 @@ public class StageAcademy : Academy
             Vector2 position = emptyCellsClone[index];
             emptyCellsClone.Remove(position);
 
-            GameObject player = Instantiate(aggresivePlayerPrefab);
+            GameObject player = Instantiate(playerPrefab);
+            player.GetComponent<Player>().playerType = Player.PlayerType.Aggresive;
+            player.GetComponent<Player>().body.color = Color.green;
             player.transform.position = position;
             player.transform.SetParent(playerParent.transform);
 
@@ -261,7 +263,9 @@ public class StageAcademy : Academy
             Vector2 position = emptyCellsClone[index];
             emptyCellsClone.Remove(position);
 
-            GameObject player = Instantiate(passivePlayerPrefab);
+            GameObject player = Instantiate(playerPrefab);
+            player.GetComponent<Player>().playerType = Player.PlayerType.Passive;
+            player.GetComponent<Player>().body.color = Color.cyan;
             player.transform.position = position;
             player.transform.SetParent(playerParent.transform);
 

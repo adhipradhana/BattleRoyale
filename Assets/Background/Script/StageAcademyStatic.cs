@@ -77,6 +77,7 @@ public class StageAcademyStatic : Academy
         agentNumber = environment.AgentNumber;
         normalAgentCount = environment.NormalNumber;
         aggresiveAgentCount = environment.AggresiveNumber;
+        passiveAgentCount = environment.PassiveNumber;
         generateStep = environment.GenerateStep;
 
     }
@@ -210,6 +211,8 @@ public class StageAcademyStatic : Academy
             emptyCellsClone.Remove(position);
 
             GameObject player = Instantiate(playerPrefab);
+            player.GetComponent<Player>().playerType = Player.PlayerType.Normal;
+            player.GetComponent<Player>().body.color = Color.red;
             player.transform.position = position;
             player.transform.SetParent(playerParent.transform);
 
@@ -223,7 +226,9 @@ public class StageAcademyStatic : Academy
             Vector2 position = emptyCellsClone[index];
             emptyCellsClone.Remove(position);
 
-            GameObject player = Instantiate(aggresivePlayerPrefab);
+            GameObject player = Instantiate(playerPrefab);
+            player.GetComponent<Player>().playerType = Player.PlayerType.Aggresive;
+            player.GetComponent<Player>().body.color = Color.green;
             player.transform.position = position;
             player.transform.SetParent(playerParent.transform);
 
@@ -237,7 +242,9 @@ public class StageAcademyStatic : Academy
             Vector2 position = emptyCellsClone[index];
             emptyCellsClone.Remove(position);
 
-            GameObject player = Instantiate(passivePlayerPrefab);
+            GameObject player = Instantiate(playerPrefab);
+            player.GetComponent<Player>().playerType = Player.PlayerType.Passive;
+            player.GetComponent<Player>().body.color = Color.cyan;
             player.transform.position = position;
             player.transform.SetParent(playerParent.transform);
 
