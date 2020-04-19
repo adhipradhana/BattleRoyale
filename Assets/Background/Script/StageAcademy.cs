@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using MLAgents;
+using TMPro;
 
 // Source : https://github.com/c00pala/Unity-2D-Maze-Generator
 public class StageAcademy : Academy
@@ -81,7 +82,9 @@ public class StageAcademy : Academy
     private GameObject mazeParent;
     private GameObject itemParent;
     private GameObject playerParent;
-    private List<GameObject> playersList = new List<GameObject>();
+    private List<Player> playersList = new List<Player>();
+
+    public PlayerInformation playerInformation;
 
     #endregion
 
@@ -110,11 +113,13 @@ public class StageAcademy : Academy
 
     public override void AcademyStep()
     {
+        playerInformation.UpdateInfo();
+
         if (AcademyValue.gameDone)
         {
-            foreach (GameObject player in playersList)
+            foreach (Player player in playersList)
             {
-                player.GetComponent<Player>().Done();
+                player.Done();
             }
         }
 
@@ -140,6 +145,7 @@ public class StageAcademy : Academy
         step = 0;
         AcademyValue.gameDone = false;
         playersList.Clear();
+        playerInformation.ClearList();
     }
 
     public void GenerateItem(int bulletPackNumber)
@@ -223,6 +229,7 @@ public class StageAcademy : Academy
         playerParent.name = "Players";
 
         AcademyValue.playerCount = agentNumber;
+        int currentAgentID = 0;
 
         for (int i = 0; i < normalAgentCount; i++)
         {
@@ -232,12 +239,19 @@ public class StageAcademy : Academy
             emptyCellsClone.Remove(position);
 
             GameObject player = Instantiate(playerPrefab);
-            player.GetComponent<Player>().playerType = Player.PlayerType.Normal;
-            player.GetComponent<Player>().body.color = Color.red;
+            Player playerInfo = player.GetComponent<Player>();
+            playerInfo.playerType = Player.PlayerType.Normal;
+            playerInfo.body.color = Color.green;
+
+            currentAgentID++;
+            playerInfo.agentID = currentAgentID;
+            player.GetComponentInChildren<TextMeshPro>().text = currentAgentID.ToString();
+
             player.transform.position = position;
             player.transform.SetParent(playerParent.transform);
 
-            playersList.Add(player);
+            playersList.Add(playerInfo);
+            playerInformation.AddPlayer(playerInfo);
         }
 
         for (int i = 0; i < aggresiveAgentCount; i++)
@@ -248,12 +262,19 @@ public class StageAcademy : Academy
             emptyCellsClone.Remove(position);
 
             GameObject player = Instantiate(playerPrefab);
-            player.GetComponent<Player>().playerType = Player.PlayerType.Aggresive;
-            player.GetComponent<Player>().body.color = Color.green;
+            Player playerInfo = player.GetComponent<Player>();
+            playerInfo.playerType = Player.PlayerType.Aggresive;
+            playerInfo.body.color = Color.red;
+
+            currentAgentID++;
+            playerInfo.agentID = currentAgentID;
+            player.GetComponentInChildren<TextMeshPro>().text = currentAgentID.ToString();
+
             player.transform.position = position;
             player.transform.SetParent(playerParent.transform);
 
-            playersList.Add(player);
+            playersList.Add(playerInfo);
+            playerInformation.AddPlayer(playerInfo);
         }
 
         for (int i = 0; i < passiveAgentCount; i++)
@@ -264,12 +285,19 @@ public class StageAcademy : Academy
             emptyCellsClone.Remove(position);
 
             GameObject player = Instantiate(playerPrefab);
-            player.GetComponent<Player>().playerType = Player.PlayerType.Passive;
-            player.GetComponent<Player>().body.color = Color.cyan;
+            Player playerInfo = player.GetComponent<Player>();
+            playerInfo.playerType = Player.PlayerType.Passive;
+            playerInfo.body.color = Color.cyan;
+
+            currentAgentID++;
+            playerInfo.agentID = currentAgentID;
+            player.GetComponentInChildren<TextMeshPro>().text = currentAgentID.ToString();
+
             player.transform.position = position;
             player.transform.SetParent(playerParent.transform);
 
-            playersList.Add(player);
+            playersList.Add(playerInfo);
+            playerInformation.AddPlayer(playerInfo);
         }
     }
 

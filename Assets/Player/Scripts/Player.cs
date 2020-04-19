@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using MLAgents;
+using TMPro;
 
 public class Player : Agent
 {
@@ -14,9 +15,12 @@ public class Player : Agent
     // Agent type
     public PlayerType playerType;
 
+    public int agentID;
+
     public SpriteRenderer body;
     public SpriteRenderer cone;
     public CircleCollider2D circle;
+    public TextMeshPro number;
 
     protected const float BooleanTrigger = 0f;
     private const string BulletPackTag = "Bullet Pack";
@@ -212,6 +216,7 @@ public class Player : Agent
         body.enabled = false;
         cone.enabled = false;
         circle.enabled = false;
+        number.enabled = false;
     }
 
     protected void OnTriggerEnter2D(Collider2D collision)
