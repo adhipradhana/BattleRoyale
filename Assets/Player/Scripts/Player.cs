@@ -35,8 +35,8 @@ public class Player : Agent
 
     // Movement reward for aggresive agent and passive agent
     private Vector2 previousPosition;
-    private const float MoveReward = 0.001f;
-    private const float MovePunishment = -0.001f;
+    private const float MoveReward = 0.0025f;
+    private const float MovePunishment = -0.0025f;
 
     public PlayerHealth playerHealth;
     public PlayerMovement playerMovement;
@@ -78,8 +78,20 @@ public class Player : Agent
                 moveRotation = ScaleAction(vectorAction[2], -Mathf.PI, 0);
             }
 
-
             playerMovement.Move(movement, moveRotation);
+
+            // Agent shooting state
+            vectorAction[4] = Mathf.Clamp(vectorAction[4], -1, 1);
+            bool isShooting = vectorAction[4] >= BooleanTrigger;
+            if (isShooting)
+            {
+                if (stepShooting % stepReset == 0)
+                {
+                    playerShooting.Shoot();
+                }
+
+                stepShooting++;
+            }
 
             // add movement reward if agent type different
             if (playerType != PlayerType.Normal)
@@ -98,19 +110,6 @@ public class Player : Agent
                         AddReward(MovePunishment);
                     }
                 }
-            }
-
-            // Agent shooting state
-            vectorAction[4] = Mathf.Clamp(vectorAction[4], -1, 1);
-            bool isShooting = vectorAction[4] >= BooleanTrigger;
-            if (isShooting)
-            {
-                if (stepShooting % stepReset == 0)
-                {
-                    playerShooting.Shoot();
-                }
-
-                stepShooting++;
             }
 
             // Check if agent win
