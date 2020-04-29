@@ -25,6 +25,7 @@ public class BulletBehaviour : MonoBehaviour
         }
         else if (collision.gameObject.CompareTag(AgentTag))
         {
+            PlayerInformation.AddShootingHitStatistic(sourcePlayer.agentID);
             sourcePlayer.AgentHitReward();
 
             Player hitPlayer = collision.GetComponent<Player>();

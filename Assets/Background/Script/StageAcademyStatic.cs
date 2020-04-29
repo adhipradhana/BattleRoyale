@@ -81,6 +81,7 @@ public class StageAcademyStatic : Academy
         passiveAgentCount = environment.PassiveNumber;
         generateStep = environment.GenerateStep;
 
+        playerInformation.InitShootingInfo(agentNumber);
     }
 
     public override void AcademyReset()

@@ -23,6 +23,8 @@ public class PlayerShooting : MonoBehaviour
     {
         if (BulletCount > MinBulletCount)
         {
+            PlayerInformation.AddShootingStatistic(sourcePlayer.agentID);
+
             GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
             Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
             rb.AddForce(firePoint.up * bulletForce, ForceMode2D.Impulse);

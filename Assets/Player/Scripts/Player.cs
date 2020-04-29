@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using MLAgents;
+using MLAgents.Sensor;
 using TMPro;
 
 public class Player : Agent
@@ -26,7 +27,7 @@ public class Player : Agent
     private const string BulletPackTag = "Bullet Pack";
 
     protected const float ItemFoundReward = 0.025f;
-    private const float BulletHitReward = 0.1f;
+    private const float BulletHitReward = 0.25f;
     private const float KillReward = 0.75f;
     protected const float WinReward = 2.5f;
 
@@ -35,7 +36,7 @@ public class Player : Agent
 
     // Movement reward for aggresive agent and passive agent
     private Vector2 previousPosition;
-    private const float MoveReward = 0.0025f;
+    private const float MoveReward = 0.05f;
     private const float MovePunishment = -0.0025f;
 
     public PlayerHealth playerHealth;

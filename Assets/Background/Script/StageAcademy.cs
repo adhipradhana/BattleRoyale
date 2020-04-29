@@ -101,6 +101,8 @@ public class StageAcademy : Academy
         normalAgentCount = environment.NormalNumber;
         aggresiveAgentCount = environment.AggresiveNumber;
         passiveAgentCount = environment.PassiveNumber;
+
+        playerInformation.InitShootingInfo(agentNumber);
     }
 
     public override void AcademyReset()
@@ -306,6 +308,9 @@ public class StageAcademy : Academy
     {
         InitValues();
 
+        // set vertical or horizontal wall
+        bool isHorizontal = Random.Range(-1.0f, 1.0f) > 0.0f;
+
         // Set starting point, set spawn point to start.
         Vector2 startPos = new Vector2(-(cellSize * (mazeColumns / 2)) + (cellSize / 2), -(cellSize * (mazeRows / 2)) + (cellSize / 2));
         Vector2 spawnPos = startPos;
@@ -319,7 +324,14 @@ public class StageAcademy : Academy
 
                 GenerateCell(spawnPos, new Vector2(x, y));
 
-                RemoveVerticalWall(new Vector2(x, y));
+                if (isHorizontal)
+                {
+                    RemoveVerticalWall(new Vector2(x, y));
+                }
+                else
+                {
+                    RemoveHorizontalWall(new Vector2(x, y));
+                }
 
                 // Increase spawnPos y.
                 spawnPos.y += cellSize;
@@ -330,7 +342,7 @@ public class StageAcademy : Academy
             spawnPos.x += cellSize;
         }
 
-        GenerateArena();
+        GenerateArena(isHorizontal);
     }
 
     public void RemoveVerticalWall(Vector2 vector)
@@ -346,27 +358,91 @@ public class StageAcademy : Academy
         }
     }
 
-    public void GenerateArena()
+    public void RemoveHorizontalWall(Vector2 vector)
     {
-        int spawnableWallAmount = mazeColumns / 2;
+        if (vector.y != 1)
+        {
+            RemoveWall(allCells[vector].cScript, 4);
+        }
+
+        if (vector.y != mazeRows)
+        {
+            RemoveWall(allCells[vector].cScript, 3);
+        }
+    }
+
+    public void GenerateArena(bool isHorizontal)
+    {
         bool[] flag;
 
-        for (int y = 1; y < mazeRows; y++)
+        if (isHorizontal)
         {
-            flag = new bool[mazeColumns+1];
+            int spawnableWallAmount = mazeColumns / 2;
 
-            for (int i = 0; i < spawnableWallAmount; i++)
+            for (int y = 1; y < mazeRows; y++)
             {
-                int x = Random.Range(1, mazeColumns + 1);
+                if (y % 2 == 0)
+                { 
 
-                while(flag[x])
-                {
-                    x = Random.Range(1, mazeColumns + 1);
+                    flag = new bool[mazeColumns+1];
+
+                    for (int i = 0; i < spawnableWallAmount; i++)
+                    {
+                        int x = Random.Range(1, mazeColumns + 1);
+
+                        while(flag[x])
+                        {
+                            x = Random.Range(1, mazeColumns + 1);
+                        }
+
+                        flag[x] = true;
+                        RemoveWall(allCells[new Vector2(x, y)].cScript, 3);
+                        RemoveWall(allCells[new Vector2(x, y + 1)].cScript, 4);
+                    }
                 }
+                else
+                {
+                    for (int x = 1; x <= mazeColumns; x++)
+                    {
+                        RemoveWall(allCells[new Vector2(x, y)].cScript, 3);
+                        RemoveWall(allCells[new Vector2(x, y + 1)].cScript, 4);
+                    }
+                }
+            }
+        }
+        else
+        {
+            int spawnableWallAmount = mazeRows / 2;
 
-                flag[x] = true;
-                RemoveWall(allCells[new Vector2(x, y)].cScript, 3);
-                RemoveWall(allCells[new Vector2(x, y+1)].cScript, 4);
+            for (int x = 1; x < mazeColumns; x++)
+            {
+                if (x % 2 == 0)
+                { 
+                    flag = new bool[mazeRows + 1];
+
+                    for (int i = 0; i < spawnableWallAmount; i++)
+                    {
+                        int y = Random.Range(1, mazeRows + 1);
+
+                        while (flag[y])
+                        {
+                            y = Random.Range(1, mazeRows + 1);
+                        }
+
+                        flag[y] = true;
+
+                        RemoveWall(allCells[new Vector2(x, y)].cScript, 2);
+                        RemoveWall(allCells[new Vector2(x+1, y)].cScript, 1);
+                    }
+                }
+                else
+                {
+                    for (int y = 1; y <= mazeRows; y++)
+                    {
+                        RemoveWall(allCells[new Vector2(x, y)].cScript, 2);
+                        RemoveWall(allCells[new Vector2(x + 1, y)].cScript, 1);
+                    }
+                }
             }
         }
     }

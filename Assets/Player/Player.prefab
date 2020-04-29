@@ -419,6 +419,7 @@ MonoBehaviour:
   cone: {fileID: 1473947667630525536}
   circle: {fileID: 58269992767811388}
   number: {fileID: 8639383914815692996}
+  ray: {fileID: 7777027492627020601}
   playerHealth: {fileID: 151732582}
   playerMovement: {fileID: 5193124900433394878}
   playerShooting: {fileID: 1430323750458562887}
