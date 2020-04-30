@@ -34,6 +34,7 @@ public class BulletBehaviour : MonoBehaviour
             if (hitPlayer.CheckDeath())
             {
                 sourcePlayer.AgentKillReward();
+                PlayerInformation.AddKillStatistics(sourcePlayer.agentID);
             }
 
             Destroy(gameObject);

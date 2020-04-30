@@ -6,17 +6,15 @@ using UnityEngine.UI;
 
 public class PlayerInformation : MonoBehaviour
 {
-    // For shooting statistics
-    public static int[] numberOfShoots;
-    public static int[] numberOfHits;
-
     public List<Player> playerList = new List<Player>();
     public Text infoText;
 
     public void InitShootingInfo(int numberPlayer)
     {
-        numberOfHits = new int[numberPlayer];
-        numberOfShoots = new int[numberPlayer];
+        AcademyValue.numberOfHits = new int[numberPlayer];
+        AcademyValue.numberOfShoots = new int[numberPlayer];
+        AcademyValue.numberOfDeath = new int[numberPlayer];
+        AcademyValue.numberOfKills = new int[numberPlayer];
     }
 
     public void ClearList()
@@ -32,12 +30,22 @@ public class PlayerInformation : MonoBehaviour
 
     public static void AddShootingStatistic(int playerID)
     {
-        numberOfShoots[playerID - 1]++;
+        AcademyValue.numberOfShoots[playerID - 1]++;
     }
 
     public static void AddShootingHitStatistic(int playerID)
     {
-        numberOfHits[playerID - 1]++;
+        AcademyValue.numberOfHits[playerID - 1]++;
+    }
+
+    public static void AddKillStatistics(int playerID)
+    {
+        AcademyValue.numberOfKills[playerID - 1]++;
+    }
+
+    public static void AddDeathStatistics(int playerID)
+    {
+        AcademyValue.numberOfDeath[playerID - 1]++;
     }
 
     public void UpdateInfo()
@@ -50,11 +58,14 @@ public class PlayerInformation : MonoBehaviour
             info.AppendFormat("Health : {0}\n", player.playerHealth.Health.ToString());
             info.AppendFormat("Bullet : {0}\n", player.playerShooting.BulletCount.ToString());
 
-            float accuracy = numberOfShoots[player.agentID - 1] != 0 ?
-                ((float)numberOfHits[player.agentID - 1] / (float)numberOfShoots[player.agentID - 1]) * 100f
+            float accuracy = AcademyValue.numberOfShoots[player.agentID - 1] != 0 ?
+                ((float)AcademyValue.numberOfHits[player.agentID - 1] / (float)AcademyValue.numberOfShoots[player.agentID - 1]) * 100f
                 : 0.0f;
 
             info.AppendFormat("Accuracy : {0}%\n", accuracy.ToString());
+            info.AppendFormat("Kill : {0}\n", AcademyValue.numberOfKills[player.agentID - 1]);
+            info.AppendFormat("Death : {0}\n", AcademyValue.numberOfDeath[player.agentID - 1]);
+
             info.AppendLine();
         }
 

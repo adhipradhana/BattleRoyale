@@ -13,4 +13,10 @@ public class AcademyValue : MonoBehaviour
     public static float minimumY = 0;
 
     public static bool gameDone = false;
+
+    public static int[] numberOfShoots;
+    public static int[] numberOfHits;
+
+    public static int[] numberOfKills;
+    public static int[] numberOfDeath;
 }
