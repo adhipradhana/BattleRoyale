@@ -36,7 +36,7 @@ public class Player : Agent
 
     // Movement reward for aggresive agent and passive agent
     private Vector2 previousPosition;
-    private const float MoveReward = 0.05f;
+    private const float MoveReward = 0.0025f;
     private const float MovePunishment = -0.0025f;
 
     public PlayerHealth playerHealth;
@@ -123,6 +123,7 @@ public class Player : Agent
             {
                 AddReward(DeathPunishment);
                 DeactivateEverything();
+                PlayerInformation.AddDeathStatistics(agentID);
                 isActive = false;
                 AcademyValue.playerCount--;
             }
