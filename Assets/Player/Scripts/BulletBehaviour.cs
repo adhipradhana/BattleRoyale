@@ -31,7 +31,7 @@ public class BulletBehaviour : MonoBehaviour
             Player hitPlayer = collision.GetComponent<Player>();
             hitPlayer.AgentHitPunishment();
 
-            if (hitPlayer.CheckDeath())
+            if (hitPlayer.CheckDeath() && hitPlayer.isActive)
             {
                 sourcePlayer.AgentKillReward();
                 PlayerInformation.AddKillStatistics(sourcePlayer.agentID);

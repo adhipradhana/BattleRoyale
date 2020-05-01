@@ -47,7 +47,7 @@ public class Player : Agent
     protected Camera cam;
     protected Vector2 mousePos;
 
-    protected bool isActive = true;
+    public bool isActive = true;
     protected int stepShooting = 0;
     protected int stepHealth = 0;
     protected const int stepReset = 10;
@@ -119,7 +119,8 @@ public class Player : Agent
                 AddReward(WinReward);
                 AcademyValue.gameDone = true;
             }
-            else if (playerHealth.CheckDeath())
+
+            if (playerHealth.CheckDeath())
             {
                 AddReward(DeathPunishment);
                 DeactivateEverything();
