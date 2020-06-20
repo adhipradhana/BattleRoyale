@@ -9,7 +9,8 @@ using YamlDotNet.Serialization.NamingConventions;
 
 public class ConfigReader
 {
-    public StringReader input;
+    public StringReader inputEnvironment;
+    public StringReader inputRewardSystem;
     Deserializer deserializer;
 
     public ConfigReader()
@@ -18,7 +19,13 @@ public class ConfigReader
         string fileContents = sr.ReadToEnd();
         sr.Close();
 
-        input = new StringReader(fileContents);
+        inputEnvironment = new StringReader(fileContents);
+
+        sr = new StreamReader(Application.dataPath + "/../../config/reward_system_config.yaml");
+        fileContents = sr.ReadToEnd();
+        sr.Close();
+
+        inputRewardSystem = new StringReader(fileContents);
 
         DeserializerBuilder deserializerBuilder = new DeserializerBuilder();
         deserializerBuilder.WithNamingConvention(new CamelCaseNamingConvention());
@@ -27,9 +34,16 @@ public class ConfigReader
 
     public Environment ReadEnvironment()
     {
-        Environment environment = deserializer.Deserialize<Environment>(input);
+        Environment environment = deserializer.Deserialize<Environment>(inputEnvironment);
 
         return environment;
+    }
+
+    public RewardSystem ReadRewardSystem()
+    {
+        RewardSystem rewardSystem = deserializer.Deserialize<RewardSystem>(inputRewardSystem);
+
+        return rewardSystem;
     }
 
     public class Environment
@@ -42,6 +56,19 @@ public class ConfigReader
         public int AggresiveNumber { get; set; }
         public int PassiveNumber { get; set; }
         public int GenerateStep { get; set; }
+    }
+
+    public class RewardSystem
+    {
+        public float ItemFoundReward { get; set; }
+        public float BulletHitReward { get; set; }
+        public float KillReward { get; set; }
+        public float WinReward { get; set; }
+        public float MoveReward { get; set; }
+        public float DeathPunishment { get; set; }
+        public float BulletMissPunishment { get; set; }
+        public float DamagePunishment { get; set; }
+        public float MovePunishment { get; set; }
     }
 
 

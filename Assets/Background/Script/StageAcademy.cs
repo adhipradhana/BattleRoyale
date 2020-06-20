@@ -103,7 +103,11 @@ public class StageAcademy : Academy
         passiveAgentCount = environment.PassiveNumber;
 
         playerInformation.InitShootingInfo(agentNumber);
-    }
+
+        ConfigReader.RewardSystem rewardSystem = config.ReadRewardSystem();
+
+        AcademyValue.ItemFoundReward = rewardSystem.ItemFoundReward;        AcademyValue.BulletHitReward = rewardSystem.BulletHitReward;        AcademyValue.KillReward = rewardSystem.KillReward;        AcademyValue.WinReward = rewardSystem.WinReward;        AcademyValue.MoveReward = rewardSystem.MoveReward;        AcademyValue.DeathPunishment = rewardSystem.DeathPunishment;        AcademyValue.BulletMissPunishment = rewardSystem.BulletMissPunishment;        AcademyValue.DamagePunishment = rewardSystem.DamagePunishment;        AcademyValue.MovePunishment = rewardSystem.MovePunishment;
+}
 
     public override void AcademyReset()
     {
@@ -111,6 +115,8 @@ public class StageAcademy : Academy
         GenerateMaze(mazeRows, mazeColumns);
         GenerateItem(bulletPackNumber);
         GeneratePlayers();
+
+        playerInformation.WriteInfo();
     }
 
     public override void AcademyStep()

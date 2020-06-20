@@ -1,22 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using UnityEngine;using System.Collections;public class AcademyValue : MonoBehaviour{    // For global accessed player count    public static int playerCount;    // For global accessed minimum and maximum    public static float maximumX = 0;    public static float minimumX = 0;    public static float maximumY = 0;    public static float minimumY = 0;    public static bool gameDone = false;    public static int[] numberOfShoots;    public static int[] numberOfHits;    public static int[] numberOfKills;    public static int[] numberOfDeath;    public static int[] numberOfWins;
 
-public class AcademyValue : MonoBehaviour
-{
-    // For global accessed player count
-    public static int playerCount;
-
-    // For global accessed minimum and maximum
-    public static float maximumX = 0;
-    public static float minimumX = 0;
-    public static float maximumY = 0;
-    public static float minimumY = 0;
-
-    public static bool gameDone = false;
-
-    public static int[] numberOfShoots;
-    public static int[] numberOfHits;
-
-    public static int[] numberOfKills;
-    public static int[] numberOfDeath;
-}
+    // For global reward system
+    public static float ItemFoundReward = 0.025f;    public static float BulletHitReward = 0.25f;    public static float KillReward = 0.75f;    public static float WinReward = 2.5f;    public static float MoveReward = 0.0025f;    public static float DeathPunishment = -1f;    public static float BulletMissPunishment = -0.01f;    public static float DamagePunishment = -0.25f;    public static float MovePunishment = -0.0025f;}
