@@ -4,6 +4,18 @@ Battle Royale is a fully competitive environment for reinforcement learning. Eac
 * The environment has continuous observation and action space.  
 * The environment is made using Unity.
 
+## Sample Environment
+
+![Sample Environment](pictures/env-vertical-new.png)
+
+Note :
+* Green circle : normal agent
+* Red circle : agressive agent
+* Blue circle : passive agent
+* Blue triangle : agent's point-of-view
+* Black line : wall
+* Yellow bullet : bullet pack
+
 ## Installation
 1. Download Unity [ML-Agents Beta v0.13.1](https://github.com/Unity-Technologies/ml-agents/releases/tag/0.13.1)
 2. Go to `ml-agents` directory and type `pip install .`
@@ -32,15 +44,16 @@ Please keep in mind that `agentNumber : normalNumber + aggresiveNumber + passive
 * generateStep - number of steps to generate new bullet packs
 
 ### reward_system_config.yaml file
-itemFoundReward - reward for getting bullet pack
-bulletHitReward - reward for hitting enemy
-killReward - reward for killing enemy
-winReward - reward for winning the game
-moveReward - reward for moving per 1 block (aggressive agent)
-deathPunishment - punishment for dying 
-bulletMissPunishment - punishment for bullet miss
-damagePunishment - punishment for getting hit by bullet
-movePunishment - punishment for moving per 1 block (passive agent)
+The followings are reward system configuration that can be changed :  
+* itemFoundReward - reward for getting bullet pack
+* bulletHitReward - reward for hitting enemy
+* killReward - reward for killing enemy
+* winReward - reward for winning the game
+* moveReward - reward for moving per 1 block (aggressive agent)
+* deathPunishment - punishment for dying 
+* bulletMissPunishment - punishment for bullet miss
+* damagePunishment - punishment for getting hit by bullet
+* movePunishment - punishment for moving per 1 block (passive agent)
 
 ## Agents
 ### Type
